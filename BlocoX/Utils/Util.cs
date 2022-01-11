@@ -19,11 +19,6 @@ namespace BlocoX.Utils
             
         }
 
-        public int StrIntToClear(string str)
-        {
-            throw new NotImplementedException();
-        }
-
         public static int StrIntToClear(string valor)
         {
                      
