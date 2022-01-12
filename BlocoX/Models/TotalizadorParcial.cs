@@ -12,6 +12,12 @@ namespace BlocoX.Models
         private decimal valor;
         private List<Produto> produtos;
 
+        public TotalizadorParcial(string nome, decimal valor)
+        {
+            Nome = nome;
+            Valor = valor;
+            Produtos = new List<Produto>();
+        }
         public TotalizadorParcial( string nome, decimal valor, List<Produto> produtos)
         {
             Nome = nome;
