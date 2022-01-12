@@ -39,5 +39,13 @@ namespace BlocoX.Models
             
             return valorCalculado;
         }
+
+        public void AjustaValorTotalizador()
+        {
+            if(valor != CalculaValorTotalizador())
+            {
+                Valor = CalculaValorTotalizador();
+            }
+        }
     }
 }
