@@ -13,7 +13,7 @@ O objetivo principal do desenvolvimento dessa aplicação é aprimorar de forma ger
 ## Funcionalidades:
 Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar no envio das pendências para Sefaz.<br>
 
-- [ ] Processar XMLs Reduções Z e atribuir os valores as classes.
+- [X] Processar XMLs Reduções Z e atribuir os valores as classes.
 - [ ] Gerar XMLs Reduções Z.
 - [ ] Corrigir Problemas de valores nas Reduções Z.
 - [ ] Assinar XMLs.
