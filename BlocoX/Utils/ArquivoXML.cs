@@ -29,7 +29,7 @@ namespace BlocoX.Utils
             {
                 return false;
             }
-
+            
             return true;
         }
 
@@ -39,7 +39,7 @@ namespace BlocoX.Utils
             try
             {
                 xml.Load(arquivoXml);
-                Console.WriteLine($"arquivo aberto {arquivoXml}");
+                
             }
             catch (Exception e)
             {
@@ -103,8 +103,6 @@ namespace BlocoX.Utils
             List<TotalizadorParcial> totalizadores = new List<TotalizadorParcial>();
             XmlNodeList totalizadoresXml = xml.SelectNodes("//TotalizadorParcial");
 
-        // CAPTURAR AS EXCEÇÔES ESPECIFICAS.
-
             for (int i = 0; i < totalizadoresXml.Count; i++)
             {
                                
@@ -115,13 +113,12 @@ namespace BlocoX.Utils
                 {
                     try
                     {
-                        string descricao = produtosTag[indice]["Descricao"].InnerText;
-                        string codigoGTIN = produtosTag[indice]["CodigoGTIN"].InnerText;
-                        string codigoCEST = produtosTag[indice]["CodigoCEST"].InnerText;
-                        string codigProprio = produtosTag[indice]["CodigoProprio"].InnerText;
-                        Produto produto = new Produto(descricao, codigoGTIN, codigoCEST,
+
+                        Produto produto = new Produto(produtosTag[indice]["Descricao"].InnerText, 
+                            produtosTag[indice]["CodigoGTIN"].InnerText, 
+                            produtosTag[indice]["CodigoCEST"].InnerText,
                             produtosTag[indice]["CodigoNCMSH"].InnerText,
-                            codigProprio,
+                            produtosTag[indice]["CodigoProprio"].InnerText,
                             decimal.Parse(produtosTag[indice]["Quantidade"].InnerText),
                             produtosTag[indice]["Unidade"].InnerText,
                             decimal.Parse(produtosTag[indice]["ValorDesconto"].InnerText),
@@ -133,8 +130,10 @@ namespace BlocoX.Utils
                         produtosLista.Add(produto);
                     } catch (System.FormatException e)
                     {
-                        Console.WriteLine($"Erro ao adicionar o produto ao totalizador!");
-                        Console.WriteLine(e);
+                        Console.WriteLine($"Erro ao adicionar o produto {produtosTag[indice]["Descricao"].InnerText} ao totalizador {totalizadoresXml[i]["Nome"].InnerText}!");
+                        Console.WriteLine(e.Message);
+                        
+                       
                     }
                 }
 
