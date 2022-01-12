@@ -50,5 +50,21 @@ namespace BlocoX.Models
 
             return vendaBrutaCalculada;
         }
+
+        public void AjustarVarlorVendaBrutaDiaria()
+        {
+            if(dadosReducao.VendaBrutaDiaria != CalculaValorVendaBrutaDiaria())
+            {
+                dadosReducao.VendaBrutaDiaria = CalculaValorVendaBrutaDiaria();
+            }
+        }
+    
+        public void AjustaValoresTotalizadores()
+        {
+            foreach(TotalizadorParcial totalizador in totalizadores)
+            {
+                totalizador.AjustaValorTotalizador();
+            }
+        }
     }
 }
