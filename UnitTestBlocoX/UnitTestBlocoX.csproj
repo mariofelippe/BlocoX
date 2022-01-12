@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\TotalizadorParcialTest.cs" />
+    <Compile Include="Models\ReducaoZTest.cs" />
     <Compile Include="Utils\UtilTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
