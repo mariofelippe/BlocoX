@@ -31,5 +31,22 @@ namespace UnitTestBlocoX.Models
             reducaZ.AdicionarTotalizador(SegundoTotalizador);
             Assert.AreEqual(10440.74M, reducaZ.CalculaValorVendaBrutaDiaria());
         }
+        [TestMethod]
+        public void TestAjustarVarlorVendaBrutaDiaria()
+        {
+            Estabelecimento estabelecimento = new Estabelecimento("24123456");
+            Ecf ecf = new Ecf("BE111610101110048745");
+            PafEcf paf = new PafEcf("00112300001237");
+            DadosReducao dadosReducao = new DadosReducao(DateTime.Now, DateTime.Now, 2, 4, 1, 10000.54M, 1M);
+            Produto produto = new Produto("Produto Test", "4714247187047", "0", "66019110", "2169997", 50.00M, "PC", 140.10M, 0, 100M, 1140.54M);
+           
+            TotalizadorParcial totalizador = new TotalizadorParcial("F1", 50.00M);
+            totalizador.AdicionarProduto(produto);
+            ReducaoZ reducaZ = new ReducaoZ(ecf, dadosReducao);
+            reducaZ.AdicionarTotalizador(totalizador);
+            reducaZ.AjustarVarlorVendaBrutaDiaria();
+            Assert.AreEqual(1380.64M, reducaZ.DadosReducao.VendaBrutaDiaria);
+           
+        }
     }
 }
