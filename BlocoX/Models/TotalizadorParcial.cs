@@ -27,5 +27,17 @@ namespace BlocoX.Models
         {
             Produtos.Add(produto);
         }
+
+        public decimal CalculaValorTotalizador()
+        {
+            decimal valorCalculado = 0;
+
+            for (int i = 0; i < produtos.Count; i++)
+            {
+                valorCalculado += produtos[i].ValorLiquido;               
+            }
+            
+            return valorCalculado;
+        }
     }
 }
