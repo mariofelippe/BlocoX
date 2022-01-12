@@ -21,5 +21,18 @@ namespace UnitTestBlocoX.Models
             Assert.AreEqual(3450.54M, totalizador.CalculaValorTotalizador());
 
         }
+
+        [TestMethod]
+        public void TestAjustaValorTotalizador()
+        {
+            Produto primeiroProduto = new Produto("Produto Test", "4714247187047", "0", "66019110", "2169997", 1.00M, "PC", 240.10M, 0, 10, 3000.54M);
+            Produto segundoProduto = new Produto("Produto Test 2", "7896058593402", "0", "66019110", "2169997", 10.00M, "PC", 120.10M, 0, 10, 450.00M);
+            List<Produto> listaProdutos = new List<Produto>();
+            listaProdutos.Add(primeiroProduto);
+            listaProdutos.Add(segundoProduto);
+            TotalizadorParcial totalizador = new TotalizadorParcial("F1", 1000M, listaProdutos);
+            totalizador.AjustaValorTotalizador();
+            Assert.AreEqual(3450.54M, totalizador.Valor);
+        }
     }
 }
