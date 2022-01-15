@@ -51,5 +51,16 @@ namespace BlocoX.Utils
             }
             
         }
+
+
+        public static string RemoverPontoVirgula(string str)
+        {
+            return str.Replace(".", "").Replace(",", "");
+        }
+
+        public static string AdiconaZeroEsqueda(int quantidade, string valor)
+        {
+            return valor.PadLeft(quantidade, '0');
+        }
     }
 }
