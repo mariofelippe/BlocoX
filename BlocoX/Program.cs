@@ -48,13 +48,14 @@ namespace BlocoX
                    
                     config.CarregaParametrosConfig();
                     string listaXML = config.ListaXML;
+                    Console.WriteLine("\nProcessando arquivos...\n");
                     if (!File.Exists(listaXML))
                     {
                         Console.WriteLine($"O arquivo {listaXML} não foi localizado!\n");
                         continue;
                     }
                     string[] arquivos = File.ReadAllLines(listaXML);
-
+                    DateTime dataInicial = DateTime.Now;
                     for (int i = 0; i < arquivos.Length; i++)
                     {
                          //Console.WriteLine(arquivos[i]);
@@ -68,21 +69,64 @@ namespace BlocoX
                             Console.WriteLine($"Arquivo {arquivos[i]} inválido!");
                             continue;
                         }
+                        Console.WriteLine($"\nProcessnado arquivo {arquivos[i]}...\n");
                         ArquivoXML.CarregarXML(arquivos[i]);
-                        List<TotalizadorParcial> totalizadores = ArquivoXML.GetTotalizadores();
+                        PafEcf paf = ArquivoXML.GetPafEcf();
                         Ecf ecf = ArquivoXML.GetEcf();
                         Estabelecimento estabelecimento = ArquivoXML.GetEstabelecimento();
-                        PafEcf paf = ArquivoXML.GetPafEcf();
                         DadosReducao dadosReducao = ArquivoXML.GetDadosReducao();
+                        List<TotalizadorParcial> totalizadores = ArquivoXML.GetTotalizadores();
+                        
+
+                        Console.WriteLine($"Credenciamento: {paf.NumeroCredenciamento}");
+                        Console.WriteLine($"IE: {estabelecimento.Ie}");
+                        Console.WriteLine($"Numero de Fabricação: {ecf.NumeroFabricacao}");
+                        Console.WriteLine($"Data Referência: {dadosReducao.DataReferencia}");
+                        Console.WriteLine($"Emissão: {dadosReducao.DataHoraEmissao}");
+                        Console.WriteLine($"CRZ: {dadosReducao.CRZ}");
+                        Console.WriteLine($"COO: {dadosReducao.COO}");
+                        Console.WriteLine($"CRZ: {dadosReducao.CRO}");
+                        Console.WriteLine($"GT: {dadosReducao.GT}");
+                        Console.WriteLine($"Venda Bruta: {dadosReducao.VendaBrutaDiaria}\n");
+                        Console.WriteLine("Totalizadores:");
+                        foreach(TotalizadorParcial totalizador in totalizadores)
+                        {
+                            Console.WriteLine($"Nome: {totalizador.Nome}");
+                            Console.WriteLine($"Valor: {totalizador.Valor}");
+
+                            if(config.AjustaValorTotalizador && totalizador.Valor != totalizador.CalculaValorTotalizador())
+                            {
+                                Console.WriteLine($"O valor do totalizador está divergênte. Ajustando para {totalizador.CalculaValorTotalizador()}");
+                                totalizador.AjustaValorTotalizador();
+                            }
+                        }
+
+                        if (config.AjustaCredenciamento && paf.NumeroCredenciamento != config.Credenciamento)
+                        {
+                            Console.WriteLine($"Ajustando o Credenciamento de {paf.NumeroCredenciamento} para {config.Credenciamento}");
+                            paf.NumeroCredenciamento = config.Credenciamento;
+                        }
+                        ReducaoZ reducaoZ = new ReducaoZ(ecf, dadosReducao, totalizadores);
+                        if (config.AjustaVendaBrutaDiaria && reducaoZ.DadosReducao.VendaBrutaDiaria != reducaoZ.CalculaValorVendaBrutaDiaria())
+                        {
+                            Console.WriteLine($"Corrigindo o valor da venda bruta para {reducaoZ.CalculaValorVendaBrutaDiaria()}");
+                            reducaoZ.AjustarVarlorVendaBrutaDiaria();
+                        }
+
+                        string strXML = Xml.XmlReducaoZ(estabelecimento, paf, reducaoZ);
+                        
+
+                       ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
                     }
 
+                    Console.WriteLine($"{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
                 }
             }
 
 
 
             
-            Console.ReadKey();
+           
         }
     }
 }

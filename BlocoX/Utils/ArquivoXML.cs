@@ -43,6 +43,7 @@ namespace BlocoX.Utils
             {
                 xml.Load(arquivoXml);
                 nomeArquivo = arquivoXml;
+                estruturaAlterada = false;
 
             }
             catch (Exception e)
@@ -150,16 +151,13 @@ namespace BlocoX.Utils
 
             return totalizadores;
         }
-        
-        public static void AjustaCredenciamentoXML(string credenciamento)
+         
+        public static void SalvarArquivoXML(string nomeCaminho, string conteudoXML)
         {
+            XmlDocument xmlArquivo = new XmlDocument();
+            xmlArquivo.LoadXml(conteudoXML);
+            xmlArquivo.Save(nomeCaminho);
             
-            xml.SelectSingleNode("//NumeroCredenciamento").InnerText = credenciamento;
-            
-        }
-        public static void SalvarArquivoXML()
-        {
-            xml.Save(nomeArquivo);
         }
     }
 
