@@ -31,8 +31,6 @@ namespace BlocoX.Utils
                 return false;
             }
 
-            
-
             return true;
         }
 
@@ -43,7 +41,6 @@ namespace BlocoX.Utils
             {
                 xml.Load(arquivoXml);
                 nomeArquivo = arquivoXml;
-                estruturaAlterada = false;
 
             }
             catch (Exception e)
