@@ -29,5 +29,19 @@ namespace UnitTestBlocoX
             decimal valorDecimal = 1234567.89M;
             Assert.AreEqual(valorDecimal, Util.StrDecimalToClear(valor)/100);
         }
+
+        [TestMethod]
+        public void TestRemoverPontoVirgula()
+        {
+            string str = "2.545,20";
+            Assert.AreEqual("254520", Util.RemoverPontoVirgula(str));
+        }
+
+        [TestMethod]
+        public void TestAdicionaZeroEsqueda()
+        {
+            string str = "254520";
+            Assert.AreEqual("000000000000254520", Util.AdiconaZeroEsqueda(18, str));
+        }
     }
 }
