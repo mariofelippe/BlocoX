@@ -14,11 +14,19 @@ O objetivo principal do desenvolvimento dessa aplicação é aprimorar de forma ger
 Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar no envio das pendências para Sefaz.<br>
 
 - [X] Processar XMLs Reduções Z e atribuir os valores as classes.
-- [ ] Gerar XMLs Reduções Z.
-- [ ] Corrigir Problemas de valores nas Reduções Z.
+- [X] Gerar XMLs Reduções Z.
+- [X] Corrigir Problemas de valores nas Reduções Z.
 - [ ] Assinar XMLs.
 - [ ] Consultar Status de Recibos.
 - [ ] Enviar XMLs.
 - [ ] Cancelar XMLs.
 - [ ] Compactar XML.
 - [ ] Gerar Relatório de Arquivos Processados.
+
+
+
+### Problemas corrigidos pela ferramenta:
+
+- Correção da venda bruta diária.
+- Ajuste de credenciamento.
+- Correção dos valores dos totalizadores parcial.
