@@ -58,10 +58,11 @@ namespace BlocoX
                     DateTime dataInicial = DateTime.Now;
                     for (int i = 0; i < arquivos.Length; i++)
                     {
-                         //Console.WriteLine(arquivos[i]);
+                        Console.WriteLine("\n-------------------------------------------------------------------------------------------------");
+                        //Console.WriteLine(arquivos[i]);
                         if (!File.Exists(arquivos[i]))
                         {
-                            Console.WriteLine($"Arquivo \"{arquivos[i]}\" localizado!");
+                            Console.WriteLine($"Arquivo \"{arquivos[i]}\" não localizado!");
                             continue;
                         }
                         if (!ArquivoXML.ValidaXMLReducaoZ(arquivos[i]))
@@ -114,12 +115,12 @@ namespace BlocoX
                         }
 
                         string strXML = Xml.XmlReducaoZ(estabelecimento, paf, reducaoZ);
-                        
 
-                       ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
+                        strXML = Xml.AssinarXML(strXML,config.GetCertificado());
+                        ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
                     }
 
-                    Console.WriteLine($"{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
+                    Console.WriteLine($"\n{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
                 }
             }
 
