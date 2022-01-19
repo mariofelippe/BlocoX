@@ -152,8 +152,10 @@ namespace BlocoX.Utils
         public static void SalvarArquivoXML(string nomeCaminho, string conteudoXML)
         {
             XmlDocument xmlArquivo = new XmlDocument();
+            xmlArquivo.PreserveWhitespace = true;
             xmlArquivo.LoadXml(conteudoXML);
             xmlArquivo.Save(nomeCaminho);
+            xml = new XmlDocument();
             
         }
     }
