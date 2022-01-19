@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BlocoX.Models;
 using System.Xml;
-
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using System.Xml.Linq;
 
 namespace BlocoX.Utils
 {
@@ -13,7 +15,7 @@ namespace BlocoX.Utils
     {
         public static string XmlReducaoZ(Estabelecimento estabelecimento, PafEcf paf, ReducaoZ reducaoZ)
         {
-            string xml = $@"<?xml version='1.0' encoding='UTF-8'?>
+            string xml = $@"
 <ReducaoZ Versao='1.0'>
     <Mensagem>
         <Estabelecimento>
@@ -40,7 +42,8 @@ namespace BlocoX.Utils
     </Mensagem>
 </ReducaoZ>";
 
-           
+            xml = XDocument.Parse(xml).ToString();
+            xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + xml;
             return xml.Replace("\'","\"");
         }
 
@@ -51,7 +54,8 @@ namespace BlocoX.Utils
 
             foreach (TotalizadorParcial totalizador in totalizadores)
             {
-                tagsTotalizadorParcial += $@"<TotalizadorParcial>
+                tagsTotalizadorParcial += $@"
+<TotalizadorParcial>
     <Nome>{totalizador.Nome}</Nome>
     <Valor>{totalizador.Valor.ToString("N2").Replace(".","")}</Valor>
     <ProdutosServicos>
@@ -61,7 +65,7 @@ namespace BlocoX.Utils
 
             }
             
-            return tagsTotalizadorParcial;
+            return tagsTotalizadorParcial.Trim();
         }
 
         private static string ProdutosServicosTags(List<Produto> produtos)
@@ -86,6 +90,28 @@ namespace BlocoX.Utils
             }
 
             return tagsProdutosServicos;
+        }
+
+        public static string AssinarXML(string conteudoXML, X509Certificate2 certificado)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.PreserveWhitespace = true;            
+            xmlDocument.LoadXml(conteudoXML);
+            SignedXml signedXml = new SignedXml(xmlDocument);
+            signedXml.SigningKey = certificado.PrivateKey;
+            signedXml.SignedInfo.SignatureMethod = SignedXml.XmlDsigRSASHA1Url;
+            Reference reference = new Reference();
+            reference.Uri = "";
+            reference.DigestMethod = SignedXml.XmlDsigSHA1Url;
+            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform());
+            reference.AddTransform(new XmlDsigC14NTransform());
+            signedXml.AddReference(reference);
+            KeyInfo keyInfo = new KeyInfo();
+            keyInfo.AddClause(new KeyInfoX509Data(certificado));
+            signedXml.KeyInfo = keyInfo;
+            signedXml.ComputeSignature();
+            xmlDocument.DocumentElement.AppendChild(xmlDocument.ImportNode(signedXml.GetXml(), true));
+            return xmlDocument.InnerXml;
         }
     }
 }
