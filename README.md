@@ -16,8 +16,8 @@ Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar n
 - [X] Processar XMLs Reduções Z e atribuir os valores as classes.
 - [X] Gerar XMLs Reduções Z.
 - [X] Corrigir Problemas de valores nas Reduções Z.
-- [ ] Assinar XMLs.
-- [ ] Consultar Status de Recibos.
+- [X] Assinar XMLs.
+- [X] Consultar Status de Recibos.
 - [ ] Enviar XMLs.
 - [ ] Cancelar XMLs.
 - [ ] Compactar XML.
