@@ -92,6 +92,18 @@ namespace BlocoX.Utils
             return tagsProdutosServicos;
         }
 
+
+        public static string XmlConsultarProcessmentoArquivo(string recibo)
+        {
+            string xml = $@"
+<Manutencao Versao='1.0'>
+     <Mensagem>
+         <Recibo>{recibo}</Recibo>
+     </Mensagem>
+</Manutencao>";
+            return xml.Replace("'","\"");
+        }
+
         public static string AssinarXML(string conteudoXML, X509Certificate2 certificado)
         {
             XmlDocument xmlDocument = new XmlDocument();
