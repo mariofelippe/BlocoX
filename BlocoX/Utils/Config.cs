@@ -19,6 +19,9 @@ namespace BlocoX.Utils
         private string senhaCertificado;
         private string credenciamento;
         private string listaXML;
+        private int tempoEsperaEnvio;
+        private string listaConsulta;
+        private int tempoEsperaConsulta;
         private string pathXML;
         private bool ajustaCredenciamento;
         private bool ajustaVendaBrutaDiaria;
@@ -36,6 +39,9 @@ namespace BlocoX.Utils
             senhaCertificado = ConfigurationManager.AppSettings.Get("SenhaCertificado");
             credenciamento = ConfigurationManager.AppSettings.Get("CredenciamentoPaf");
             listaXML = ConfigurationManager.AppSettings.Get("ListaXML");
+            TempoEsperaEnvio = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaEnvio"));
+            ListaConsulta = ConfigurationManager.AppSettings.Get("ListaConsulta");
+            TempoEsperaConsulta = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaConsulta"));
             pathXML = ConfigurationManager.AppSettings.Get("PathXML");
             AjustaCredenciamento = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaCredencimanetoPaf"));
             AjustaVendaBrutaDiaria = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaVendaBrutaDiaria"));
@@ -51,6 +57,9 @@ namespace BlocoX.Utils
         public bool AjustaValorTotalizador { get => ajustaValorTotalizador; set => ajustaValorTotalizador = value; }
         public string CaminhoaCertificado { get => caminhoCertificado; set => caminhoCertificado = value; }
         public string SenhaCertificado { get => senhaCertificado; set => senhaCertificado = value; }
+        public string ListaConsulta { get => listaConsulta; set => listaConsulta = value; }
+        public int TempoEsperaEnvio { get => tempoEsperaEnvio; set => tempoEsperaEnvio = value; }
+        public int TempoEsperaConsulta { get => tempoEsperaConsulta; set => tempoEsperaConsulta = value * 1000; }
 
         public X509Certificate2 GetCertificado()
         {
