@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://webservices.sef.sc.gov.br/wsDfeSiv/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservices.sef.sc.gov.br/wsDfeSiv/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service para manutenção de arquivos do Bloco X</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://webservices.sef.sc.gov.br/wsDfeSiv/">
+      <s:element name="TransmitirArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXmlCompactado" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TransmitirArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TransmitirArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarProcessamentoArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarProcessamentoArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarProcessamentoArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DownloadArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelarArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelarArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelarArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReprocessarArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReprocessarArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReprocessarArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarPendenciasDesenvolvedorPafEcf">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarPendenciasDesenvolvedorPafEcfResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarPendenciasDesenvolvedorPafEcfResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarPendenciasContribuinte">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarPendenciasContribuinteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarPendenciasContribuinteResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarArquivos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarArquivosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarArquivosResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarHistoricoArquivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarHistoricoArquivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarHistoricoArquivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultarStatusMetodosBlocoX">
+        <s:complexType />
+      </s:element>
+      <s:element name="ConsultarStatusMetodosBlocoXResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultarStatusMetodosBlocoXResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TransmitirArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:TransmitirArquivo" />
+  </wsdl:message>
+  <wsdl:message name="TransmitirArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:TransmitirArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarProcessamentoArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarProcessamentoArquivo" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarProcessamentoArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarProcessamentoArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DownloadArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:DownloadArquivo" />
+  </wsdl:message>
+  <wsdl:message name="DownloadArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:DownloadArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelarArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelarArquivo" />
+  </wsdl:message>
+  <wsdl:message name="CancelarArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelarArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReprocessarArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:ReprocessarArquivo" />
+  </wsdl:message>
+  <wsdl:message name="ReprocessarArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:ReprocessarArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarPendenciasDesenvolvedorPafEcfSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarPendenciasDesenvolvedorPafEcf" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarPendenciasDesenvolvedorPafEcfSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarPendenciasDesenvolvedorPafEcfResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarPendenciasContribuinteSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarPendenciasContribuinte" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarPendenciasContribuinteSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarPendenciasContribuinteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarArquivosSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarArquivos" />
+  </wsdl:message>
+  <wsdl:message name="ListarArquivosSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarArquivosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarHistoricoArquivoSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarHistoricoArquivo" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarHistoricoArquivoSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarHistoricoArquivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarStatusMetodosBlocoXSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultarStatusMetodosBlocoX" />
+  </wsdl:message>
+  <wsdl:message name="ConsultarStatusMetodosBlocoXSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultarStatusMetodosBlocoXResponse" />
+  </wsdl:message>
+  <wsdl:portType name="BlocoXSoap">
+    <wsdl:operation name="TransmitirArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Enviar arquivo XML compactado do Bloco X para processamento.</wsdl:documentation>
+      <wsdl:input message="tns:TransmitirArquivoSoapIn" />
+      <wsdl:output message="tns:TransmitirArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarProcessamentoArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consultar a situação do processamento de arquivo do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarProcessamentoArquivoSoapIn" />
+      <wsdl:output message="tns:ConsultarProcessamentoArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Baixar um arquivo do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:DownloadArquivoSoapIn" />
+      <wsdl:output message="tns:DownloadArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelarArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Cancelar arquivo do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:CancelarArquivoSoapIn" />
+      <wsdl:output message="tns:CancelarArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReprocessarArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Reprocessar arquivo do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:ReprocessarArquivoSoapIn" />
+      <wsdl:output message="tns:ReprocessarArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasDesenvolvedorPafEcf">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consultar as pendências de todos os contribuintes no Bloco X que são clientes do desenvolvedor de PAF-ECF</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarPendenciasDesenvolvedorPafEcfSoapIn" />
+      <wsdl:output message="tns:ConsultarPendenciasDesenvolvedorPafEcfSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasContribuinte">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consultar pendências do contribuinte no Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarPendenciasContribuinteSoapIn" />
+      <wsdl:output message="tns:ConsultarPendenciasContribuinteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarArquivos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Listar arquivos do Bloco X transmitidos pelo contribuinte</wsdl:documentation>
+      <wsdl:input message="tns:ListarArquivosSoapIn" />
+      <wsdl:output message="tns:ListarArquivosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarHistoricoArquivo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consultar o histórico de um arquivo do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarHistoricoArquivoSoapIn" />
+      <wsdl:output message="tns:ConsultarHistoricoArquivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarStatusMetodosBlocoX">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Consultar status dos métodos do Bloco X</wsdl:documentation>
+      <wsdl:input message="tns:ConsultarStatusMetodosBlocoXSoapIn" />
+      <wsdl:output message="tns:ConsultarStatusMetodosBlocoXSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BlocoXSoap" type="tns:BlocoXSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransmitirArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/TransmitirArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarProcessamentoArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarProcessamentoArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/DownloadArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/CancelarArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReprocessarArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ReprocessarArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasDesenvolvedorPafEcf">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarPendenciasDesenvolvedorPafEcf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasContribuinte">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarPendenciasContribuinte" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarArquivos">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ListarArquivos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarHistoricoArquivo">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarHistoricoArquivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarStatusMetodosBlocoX">
+      <soap:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarStatusMetodosBlocoX" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="BlocoXSoap12" type="tns:BlocoXSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransmitirArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/TransmitirArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarProcessamentoArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarProcessamentoArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/DownloadArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelarArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/CancelarArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReprocessarArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ReprocessarArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasDesenvolvedorPafEcf">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarPendenciasDesenvolvedorPafEcf" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarPendenciasContribuinte">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarPendenciasContribuinte" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarArquivos">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ListarArquivos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarHistoricoArquivo">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarHistoricoArquivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarStatusMetodosBlocoX">
+      <soap12:operation soapAction="http://webservices.sef.sc.gov.br/wsDfeSiv/ConsultarStatusMetodosBlocoX" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BlocoX">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service para manutenção de arquivos do Bloco X</wsdl:documentation>
+    <wsdl:port name="BlocoXSoap" binding="tns:BlocoXSoap">
+      <soap:address location="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
+    </wsdl:port>
+    <wsdl:port name="BlocoXSoap12" binding="tns:BlocoXSoap12">
+      <soap12:address location="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

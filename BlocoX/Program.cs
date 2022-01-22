@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Xml;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -10,6 +10,7 @@ using System.Security.Cryptography.Xml;
 using BlocoX.Utils;
 using BlocoX.Models;
 using System.IO;
+using BlocoX.Services;
 
 
 
@@ -21,7 +22,7 @@ namespace BlocoX
         {
 
             Config config = new Config();
-
+            ServicoBlocoX servico = new ServicoBlocoX();
             string op;
 
             while (true)
@@ -33,6 +34,7 @@ namespace BlocoX
                 Console.WriteLine();
                 Console.WriteLine("Opções:");
                 Console.WriteLine("1 - Processar XMLs.");
+                Console.WriteLine("2 - Consultar Recibos.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
@@ -121,6 +123,28 @@ namespace BlocoX
                     }
 
                     Console.WriteLine($"\n{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
+                }
+
+                if (op == "2")
+                {
+                    config.CarregaParametrosConfig();
+                    Console.WriteLine("Consultando...");
+                   
+                    string listaConsulta = config.ListaConsulta;                                       
+                    using (StreamReader linha = new StreamReader(config.ListaConsulta))
+                    {
+                        string recibo;
+                        while ((recibo = linha.ReadLine()) != null)
+                        {
+                            Console.WriteLine($"Consultando o recibo: {recibo}.");
+                            Console.WriteLine(servico.ConsultarProcessamentoArquivo(recibo));
+                            Console.WriteLine("-------------------------------------------------------------------------------------------\n");
+                            Thread.Sleep(config.TempoEsperaConsulta);
+ 
+                        }
+                    }
+                   
+         
                 }
             }
 

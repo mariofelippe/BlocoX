@@ -36,9 +36,11 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\SefazSC\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Models\DadosReducao.cs" />
     <Compile Include="Models\Ecf.cs" />
     <Compile Include="Models\Estabelecimento.cs" />
@@ -56,6 +63,7 @@
     <Compile Include="Models\TotalizadorParcial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ServicoBlocoX.cs" />
     <Compile Include="Utils\ArquivoXML.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\Util.cs" />
@@ -63,14 +71,57 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.CancelarArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ConsultarHistoricoArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ConsultarPendenciasContribuinteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ConsultarPendenciasDesenvolvedorPafEcfResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ConsultarProcessamentoArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ConsultarStatusMetodosBlocoXResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.DownloadArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ListarArquivosResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.ReprocessarArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.SefazSC.TransmitirArquivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\SefazSC\BlocoX.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\SefazSC\configuration91.svcinfo" />
+    <None Include="Connected Services\SefazSC\configuration.svcinfo" />
+    <None Include="Connected Services\SefazSC\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ListaConsulta.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ListaXML.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ListaXML.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <WCFMetadataStorage Include="Connected Services\SefazSC\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
