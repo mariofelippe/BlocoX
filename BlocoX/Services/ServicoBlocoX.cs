@@ -30,7 +30,7 @@ namespace BlocoX.Services
             } catch (System.ServiceModel.EndpointNotFoundException e)
             {
                 Console.WriteLine("Não foi possível fazer a requisição! Verifique o endereço ou a conexão!");
-                
+                Console.WriteLine(e.Message);
             }
 
 

@@ -24,6 +24,7 @@ namespace BlocoX
             Config config = new Config();
             ServicoBlocoX servico = new ServicoBlocoX();
             string op;
+            
 
             while (true)
             {
@@ -142,6 +143,7 @@ namespace BlocoX
                             Console.WriteLine("Recibo: " + retorno.Recibo);
                             Console.WriteLine("Codigo Processamento: " + retorno.CodigoProcessamento);
                             Console.WriteLine("Descrição: " + retorno.Descricao);
+                            Util.SalvaLogRetorno($@"{config.PathLogs}\ConsultaRecibo.csv", $"{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao}");
                             Console.WriteLine("-------------------------------------------------------------------------------------------\n");
                             Thread.Sleep(config.TempoEsperaConsulta);
  
