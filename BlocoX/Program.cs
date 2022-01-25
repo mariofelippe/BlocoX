@@ -136,8 +136,12 @@ namespace BlocoX
                         string recibo;
                         while ((recibo = linha.ReadLine()) != null)
                         {
-                            Console.WriteLine($"Consultando o recibo: {recibo}.");
-                            Console.WriteLine(servico.ConsultarProcessamentoArquivo(recibo));
+
+                            Console.WriteLine($"Consultando o recibo: {recibo}.\n");
+                            Retorno retorno = servico.ConsultarProcessamentoArquivo(recibo);
+                            Console.WriteLine("Recibo: " + retorno.Recibo);
+                            Console.WriteLine("Codigo Processamento: " + retorno.CodigoProcessamento);
+                            Console.WriteLine("Descrição: " + retorno.Descricao);
                             Console.WriteLine("-------------------------------------------------------------------------------------------\n");
                             Thread.Sleep(config.TempoEsperaConsulta);
  
