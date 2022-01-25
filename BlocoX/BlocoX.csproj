@@ -63,6 +63,7 @@
     <Compile Include="Models\TotalizadorParcial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Retorno.cs" />
     <Compile Include="Services\ServicoBlocoX.cs" />
     <Compile Include="Utils\ArquivoXML.cs" />
     <Compile Include="Utils\Config.cs" />
