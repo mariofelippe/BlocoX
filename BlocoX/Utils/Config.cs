@@ -23,6 +23,7 @@ namespace BlocoX.Utils
         private string listaConsulta;
         private int tempoEsperaConsulta;
         private string pathXML;
+        private string pathLogs;
         private bool ajustaCredenciamento;
         private bool ajustaVendaBrutaDiaria;
         private bool ajustaValorTotalizador;
@@ -43,6 +44,7 @@ namespace BlocoX.Utils
             ListaConsulta = ConfigurationManager.AppSettings.Get("ListaConsulta");
             TempoEsperaConsulta = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaConsulta"));
             pathXML = ConfigurationManager.AppSettings.Get("PathXML");
+            pathLogs = ConfigurationManager.AppSettings.Get("PathLogs");
             AjustaCredenciamento = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaCredencimanetoPaf"));
             AjustaVendaBrutaDiaria = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaVendaBrutaDiaria"));
             AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));           
@@ -60,11 +62,28 @@ namespace BlocoX.Utils
         public string ListaConsulta { get => listaConsulta; set => listaConsulta = value; }
         public int TempoEsperaEnvio { get => tempoEsperaEnvio; set => tempoEsperaEnvio = value; }
         public int TempoEsperaConsulta { get => tempoEsperaConsulta; set => tempoEsperaConsulta = value * 1000; }
+        public string PathLogs { get => pathLogs; set => pathLogs = value; }
 
         public X509Certificate2 GetCertificado()
         {
-            X509Certificate2 certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
-            return certificado;
+            
+            try
+            {
+                X509Certificate2 certificado = new X509Certificate2(caminhoCertificado, senhaCertificado);
+                return certificado;
+
+            }catch(Exception e)
+            {
+                Console.WriteLine("Erro ao carregar o certificado! Favor verificar o arquivo e a senha.");
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+                Environment.Exit(0);
+                X509Certificate2 certificado = new X509Certificate2();
+                return certificado;
+
+            }
+            
         }
+
     }
 }
