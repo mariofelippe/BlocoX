@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace BlocoX.Utils
 {
@@ -61,6 +62,16 @@ namespace BlocoX.Utils
         public static string AdiconaZeroEsqueda(int quantidade, string valor)
         {
             return valor.PadLeft(quantidade, '0');
+        }
+
+        public static void SalvaLogRetorno(string nomeArquivo, string conteudo)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(nomeArquivo));
+            using (StreamWriter arquivo = File.AppendText(nomeArquivo))
+            {
+                arquivo.WriteLine(conteudo);
+            }
+
         }
     }
 }
