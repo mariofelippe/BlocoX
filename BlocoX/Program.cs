@@ -121,8 +121,14 @@ namespace BlocoX
 
                         strXML = Xml.AssinarXML(strXML,config.GetCertificado());
                         ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
+                        Console.WriteLine("\nEnviando XML...\n");
                         Retorno retorno = servico.EnviaXMLReducaoZ(strXML, reducaoZ.GeraNomeReducaoZ());
+                        Console.WriteLine("Recibo: " + retorno.Recibo);
+                        Console.WriteLine("Codigo Processamento: " + retorno.CodigoProcessamento);
+                        Console.WriteLine("Descrição: " + retorno.Descricao);
+                        Console.WriteLine("Mensagem: " + retorno.Mensagem);
                         Util.SalvaLogRetorno($@"{config.PathLogs}\EnvioXmlReducaoZ.csv", $"{estabelecimento.Ie};{reducaoZ.ECF.NumeroFabricacao};{reducaoZ.DadosReducao.CRZ};{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
+                        Thread.Sleep(config.TempoEsperaEnvio);
                     }
 
                     Console.WriteLine($"\n{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
