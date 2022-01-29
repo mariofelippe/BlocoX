@@ -66,5 +66,11 @@ namespace BlocoX.Models
                 totalizador.AjustaValorTotalizador();
             }
         }
+
+        public string GeraNomeReducaoZ()
+        {
+            string nome = "Reducao Z " + dadosReducao.DataReferencia.ToString().Split(' ')[0].Replace("/","");
+            return nome;
+        }
     }
 }
