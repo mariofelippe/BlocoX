@@ -62,7 +62,7 @@ namespace BlocoX
                     for (int i = 0; i < arquivos.Length; i++)
                     {
                         Console.WriteLine("\n-------------------------------------------------------------------------------------------------");
-                        //Console.WriteLine(arquivos[i]);
+                        
                         if (!File.Exists(arquivos[i]))
                         {
                             Console.WriteLine($"Arquivo \"{arquivos[i]}\" não localizado!");
@@ -121,6 +121,8 @@ namespace BlocoX
 
                         strXML = Xml.AssinarXML(strXML,config.GetCertificado());
                         ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
+                        Retorno retorno = servico.EnviaXMLReducaoZ(strXML, reducaoZ.GeraNomeReducaoZ());
+                        Util.SalvaLogRetorno($@"{config.PathLogs}\EnvioXmlReducaoZ.csv", $"{estabelecimento.Ie};{reducaoZ.ECF.NumeroFabricacao};{reducaoZ.DadosReducao.CRZ};{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
                     }
 
                     Console.WriteLine($"\n{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
