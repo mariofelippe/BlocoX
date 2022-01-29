@@ -24,17 +24,25 @@ namespace BlocoX.Services
             {
                 string pXml = Xml.AssinarXML(Xml.XmlConsultarProcessmentoArquivo(recibo), config.GetCertificado());
                 string xml = client.ConsultarProcessamentoArquivo(pXml);
-                xmlRetorno.LoadXml(xml);             
+                xmlRetorno.LoadXml(xml);                    
                 retorno.Recibo = xmlRetorno.SelectSingleNode("//Recibo").InnerText;
-                retorno.CodigoProcessamento = int.Parse(xmlRetorno.SelectSingleNode("//SituacaoProcessamentoCodigo").InnerText);
-                retorno.Descricao = xmlRetorno.SelectSingleNode("//SituacaoProcessamentoDescricao").InnerText;
-                
+                if (xmlRetorno.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText == "3")
+                {
+                    retorno.CodigoProcessamento = 2;
+                    retorno.Descricao = xmlRetorno.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText;
+                }
+            
+                else
+                {
+                    retorno.CodigoProcessamento = int.Parse(xmlRetorno.SelectSingleNode("//SituacaoProcessamentoCodigo").InnerText);
+                    retorno.Descricao = xmlRetorno.SelectSingleNode("//SituacaoProcessamentoDescricao").InnerText;
+                }
 
             } catch (System.ServiceModel.EndpointNotFoundException e)
             {
                 Console.WriteLine("Não foi possível fazer a requisição! Verifique o endereço ou a conexão!");
                 Console.WriteLine(e.Message);
-            }
+            } 
 
 
             return retorno;
@@ -46,12 +54,13 @@ namespace BlocoX.Services
             Retorno retorno = new Retorno();
             XmlDocument xmlRetorno = new XmlDocument();
             xmlRetorno.LoadXml(client.TransmitirArquivo(Compcatar(xml, nomeArquivo)));
-            retorno.Recibo = xmlRetorno.SelectSingleNode("//Recibo").InnerText;
+            if(xmlRetorno.SelectSingleNode("Resposta").FirstChild.LocalName == "Recibo")
+            {
+                retorno.Recibo = xmlRetorno.SelectSingleNode("//Recibo").InnerText;
+            }            
             retorno.CodigoProcessamento = int.Parse(xmlRetorno.SelectSingleNode("//SituacaoProcessamentoCodigo").InnerText);
             retorno.Descricao = xmlRetorno.SelectSingleNode("//SituacaoProcessamentoDescricao").InnerText;
             retorno.Mensagem = xmlRetorno.SelectSingleNode("//Mensagem").InnerText;
-           
-            
 
             return retorno;
         }
