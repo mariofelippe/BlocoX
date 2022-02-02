@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.IO.Compression;
 
 namespace BlocoX.Utils
 {
@@ -72,6 +73,28 @@ namespace BlocoX.Utils
                 arquivo.WriteLine(conteudo);
             }
 
+        }
+
+        public static void CompatactarXML(string caminhoArquivo)
+        {
+            string caminho = Path.GetFullPath(caminhoArquivo).Replace(Path.GetFileName(caminhoArquivo), "");
+            string nome = Path.GetFileNameWithoutExtension(caminhoArquivo);
+            
+            using(FileStream stream = new FileStream(caminho + nome + ".zip", FileMode.Create))
+            {
+                using(ZipArchive zip = new ZipArchive(stream, ZipArchiveMode.Create))
+                {
+                    ZipArchiveEntry entry = zip.CreateEntry(nome + ".xml");
+                    using(Stream streamEntry = entry.Open())
+                    {
+                        using(FileStream streamXML = new FileStream(caminhoArquivo, FileMode.Open))
+                        {
+                            streamXML.CopyTo(streamEntry);
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }
