@@ -18,12 +18,10 @@ Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar n
 - [X] Corrigir Problemas de valores nas Reduções Z.
 - [X] Assinar XMLs.
 - [X] Consultar Status de Recibos.
-- [ ] Enviar XMLs.
+- [X] Enviar XMLs.
 - [ ] Cancelar XMLs.
 - [ ] Compactar XML.
-- [ ] Gerar Relatório de Arquivos Processados.
-
-
+- [X] Gerar Relatório de Arquivos Processados.
 
 ### Problemas corrigidos pela ferramenta:
 
