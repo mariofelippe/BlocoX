@@ -155,7 +155,7 @@ namespace BlocoX.Utils
             xmlArquivo.PreserveWhitespace = true;
             xmlArquivo.LoadXml(conteudoXML);
             xmlArquivo.Save(nomeCaminho);
-            xml = new XmlDocument();
+            Util.CompatactarXML(nomeCaminho);
             
         }
     }
