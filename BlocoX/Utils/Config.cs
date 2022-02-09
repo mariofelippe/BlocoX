@@ -27,6 +27,7 @@ namespace BlocoX.Utils
         private bool ajustaCredenciamento;
         private bool ajustaVendaBrutaDiaria;
         private bool ajustaValorTotalizador;
+        private string motivoCancelamento;
         public Config()
         {
             CarregaParametrosConfig();  
@@ -47,7 +48,9 @@ namespace BlocoX.Utils
             pathLogs = ConfigurationManager.AppSettings.Get("PathLogs");
             AjustaCredenciamento = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaCredencimanetoPaf"));
             AjustaVendaBrutaDiaria = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaVendaBrutaDiaria"));
-            AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));           
+            AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));
+            MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCanelamento");
+            
             
         }
 
@@ -63,6 +66,7 @@ namespace BlocoX.Utils
         public int TempoEsperaEnvio { get => tempoEsperaEnvio; set => tempoEsperaEnvio = value; }
         public int TempoEsperaConsulta { get => tempoEsperaConsulta; set => tempoEsperaConsulta = value * 1000; }
         public string PathLogs { get => pathLogs; set => pathLogs = value; }
+        public string MotivoCancelamento { get => motivoCancelamento; set => motivoCancelamento = value; }
 
         public X509Certificate2 GetCertificado()
         {
