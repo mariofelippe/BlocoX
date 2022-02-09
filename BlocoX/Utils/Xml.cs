@@ -104,6 +104,19 @@ namespace BlocoX.Utils
             return xml.Replace("'","\"");
         }
 
+        public static string XmlCancealmentoReducaoZ(string recibo, string motivo)
+        {
+            string xml = $@"
+<Manutencao Versao='1.0'>
+     <Mensagem>
+         <Recibo>{recibo}</Recibo>
+         <Motivo>{motivo}</Motivo>
+     </Mensagem>
+</Manutencao>";
+
+            return xml.Replace("'", "\"");
+        }
+
         public static string AssinarXML(string conteudoXML, X509Certificate2 certificado)
         {
             XmlDocument xmlDocument = new XmlDocument();
