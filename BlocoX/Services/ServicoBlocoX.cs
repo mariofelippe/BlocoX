@@ -64,6 +64,31 @@ namespace BlocoX.Services
 
             return retorno;
         }
+        
+        public Retorno CancelaReducaoZ(string pXml)
+        {
+            Retorno retorno = new Retorno();
+
+            XmlDocument xmlRetorno = new XmlDocument();
+            string xml = client.CancelarArquivo(pXml);
+            xmlRetorno.LoadXml(xml);
+
+            if (int.Parse(xmlRetorno.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText) == 0){
+                retorno.Recibo = xmlRetorno.SelectSingleNode("//Recibo").InnerText;
+                retorno.CodigoProcessamento = int.Parse(xmlRetorno.SelectSingleNode("//SituacaoProcessamentoCodigo").InnerText);
+                retorno.Descricao = xmlRetorno.SelectSingleNode("//SituacaoProcessamentoDescricao").InnerText;
+                retorno.Mensagem = xmlRetorno.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText;
+            }
+            else
+            {
+                retorno.Recibo = xmlRetorno.SelectSingleNode("//Recibo").InnerText;
+                retorno.CodigoProcessamento = int.Parse(xmlRetorno.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText);
+                retorno.Mensagem = xmlRetorno.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText;
+            }
+            
+
+            return retorno;
+        }
 
         public Byte[] Compcatar(string conteudo, string nomeArquivo)
         {
