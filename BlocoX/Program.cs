@@ -138,7 +138,7 @@ namespace BlocoX
                 if (op == "2")
                 {
                     config.CarregaParametrosConfig();
-                    Console.WriteLine("Consultando...");
+                    Console.WriteLine("\nConsultando...");
                    
                     string listaConsulta = config.ListaConsulta;                                       
                     using (StreamReader linha = new StreamReader(config.ListaConsulta))
@@ -165,20 +165,22 @@ namespace BlocoX
                 if (op == "3")
                 {
                     config.CarregaParametrosConfig();
-                    Console.WriteLine("Cancelando XML...");
+                    Console.WriteLine("\nCancelando XML...");
 
                     string[] listaRecibo = File.ReadAllLines(config.ListaCancelamento);
                     
                     for (int i = 0; i < listaRecibo.Length; i++)
                     {
-                        Console.WriteLine(listaRecibo[i]);
+                        Console.WriteLine($"Cancelando a redução do recibi {listaRecibo[i]}...\n");
                         string xml = Xml.XmlCancealmentoReducaoZ(listaRecibo[i], config.MotivoCancelamento);
                         xml = Xml.AssinarXML(xml, config.GetCertificado());
-                        Retorno retorno = servico.CancelaReducaoZ(xml);
+                        Retorno retorno = servico.CancelaReducaoZ(xml);                        
                         Console.WriteLine($"Recibo: {retorno.Recibo}");
                         Console.WriteLine($"Codigo Processamento: {retorno.CodigoProcessamento}");
                         Console.WriteLine($"Descrição: {retorno.Descricao}");
                         Console.WriteLine($"Mensagem: {retorno.Mensagem}");
+                        Console.WriteLine("-------------------------------------------------------------------------------------------\n");
+                        Util.SalvaLogRetorno($@"{config.PathLogs}\Cancelamento.csv", $"{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
 
                     }
                     
