@@ -19,8 +19,8 @@ Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar n
 - [X] Assinar XMLs.
 - [X] Consultar Status de Recibos.
 - [X] Enviar XMLs.
-- [ ] Cancelar XMLs.
-- [ ] Compactar XML.
+- [X] Cancelar XMLs.
+- [X] Compactar XML.
 - [X] Gerar Relatório de Arquivos Processados.
 
 ### Problemas corrigidos pela ferramenta:
