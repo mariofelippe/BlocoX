@@ -34,9 +34,9 @@ namespace BlocoX
                 Console.WriteLine("*****************************************************************");
                 Console.WriteLine();
                 Console.WriteLine("Opções:");
-                Console.WriteLine("1 - Processar XMLs.");
+                Console.WriteLine("1 - Enviar XMLs Redução Z.");
                 Console.WriteLine("2 - Consultar Recibos.");
-                Console.WriteLine("3 - Cancelar XMLs.");
+                Console.WriteLine("3 - Cancelar XMLs Redução Z.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
