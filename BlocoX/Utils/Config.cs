@@ -50,7 +50,7 @@ namespace BlocoX.Utils
             AjustaCredenciamento = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaCredencimanetoPaf"));
             AjustaVendaBrutaDiaria = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaVendaBrutaDiaria"));
             AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));
-            MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCanelamento");
+            MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCancelamento");
             ListaCancelamento = ConfigurationManager.AppSettings.Get("ListaCancelamento");
             
             
