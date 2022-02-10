@@ -36,6 +36,7 @@ namespace BlocoX
                 Console.WriteLine("Opções:");
                 Console.WriteLine("1 - Processar XMLs.");
                 Console.WriteLine("2 - Consultar Recibos.");
+                Console.WriteLine("3 - Cancelar XMLs.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
@@ -159,6 +160,28 @@ namespace BlocoX
                     }
                    
          
+                }
+
+                if (op == "3")
+                {
+                    config.CarregaParametrosConfig();
+                    Console.WriteLine("Cancelando XML...");
+
+                    string[] listaRecibo = File.ReadAllLines(config.ListaCancelamento);
+                    
+                    for (int i = 0; i < listaRecibo.Length; i++)
+                    {
+                        Console.WriteLine(listaRecibo[i]);
+                        string xml = Xml.XmlCancealmentoReducaoZ(listaRecibo[i], config.MotivoCancelamento);
+                        xml = Xml.AssinarXML(xml, config.GetCertificado());
+                        Retorno retorno = servico.CancelaReducaoZ(xml);
+                        Console.WriteLine($"Recibo: {retorno.Recibo}");
+                        Console.WriteLine($"Codigo Processamento: {retorno.CodigoProcessamento}");
+                        Console.WriteLine($"Descrição: {retorno.Descricao}");
+                        Console.WriteLine($"Mensagem: {retorno.Mensagem}");
+
+                    }
+                    
                 }
             }
 
