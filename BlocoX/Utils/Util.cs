@@ -96,5 +96,31 @@ namespace BlocoX.Utils
                 }
             }
         }
+
+        public static void SalvarArquivoBase64(string conteudo)
+        {
+
+            if (!Directory.Exists("Downloads"))
+            {
+                Directory.CreateDirectory("Downloads");
+            }
+
+            if (string.IsNullOrEmpty(conteudo))
+            {
+                return;
+            }
+
+            Byte[] dados = Convert.FromBase64String(conteudo);
+            using (MemoryStream st = new MemoryStream(dados))
+            {
+                ZipArchive zip = new ZipArchive(st, ZipArchiveMode.Read);
+                foreach(ZipArchiveEntry entry in zip.Entries)
+                {
+                    string nome = entry.Name.Split('.')[0];
+                    File.WriteAllBytes("Downloads\\" + nome + ".zip", dados);
+                   
+                }
+            }
+        }
     }
 }
