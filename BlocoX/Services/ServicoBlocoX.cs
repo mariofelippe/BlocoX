@@ -90,6 +90,33 @@ namespace BlocoX.Services
             return retorno;
         }
 
+        public string DownloadXMLReducaoZ(string pXml)
+        {
+            string dados = string.Empty;
+            try
+            {
+                string xml = client.DownloadArquivo(pXml);
+
+                XmlDocument xmlRetorno = new XmlDocument();
+                xmlRetorno.LoadXml(xml);
+                if(xmlRetorno.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText != "OK")
+                {
+                    Console.WriteLine(xmlRetorno.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText);
+                }
+                else{
+                    dados = xmlRetorno.SelectSingleNode("//Arquivo").InnerText;
+                }
+               
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"Erro ao tentar fazer o download do arquivo!\n{e.Message}");
+                return dados;
+            }
+
+            return dados;
+        }
+
         public Byte[] Compcatar(string conteudo, string nomeArquivo)
         {
 
