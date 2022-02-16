@@ -29,6 +29,8 @@ namespace BlocoX.Utils
         private bool ajustaValorTotalizador;
         private string motivoCancelamento;
         private string listaCancelamento;
+        private string listaDownloadArquivo;
+        private int tempoEsperaDownload;
         public Config()
         {
             CarregaParametrosConfig();  
@@ -52,8 +54,10 @@ namespace BlocoX.Utils
             AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));
             MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCancelamento");
             ListaCancelamento = ConfigurationManager.AppSettings.Get("ListaCancelamento");
-            
-            
+            ListaDownloadArquivo = ConfigurationManager.AppSettings.Get("ListaDownloadArquivo");
+            TempoEsperaDownload = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaDownload"));
+
+
         }
 
         public string Credenciamento { get => credenciamento; }
@@ -65,11 +69,13 @@ namespace BlocoX.Utils
         public string CaminhoaCertificado { get => caminhoCertificado; set => caminhoCertificado = value; }
         public string SenhaCertificado { get => senhaCertificado; set => senhaCertificado = value; }
         public string ListaConsulta { get => listaConsulta; set => listaConsulta = value; }
-        public int TempoEsperaEnvio { get => tempoEsperaEnvio; set => tempoEsperaEnvio = value; }
+        public int TempoEsperaEnvio { get => tempoEsperaEnvio; set => tempoEsperaEnvio = value * 1000; }
         public int TempoEsperaConsulta { get => tempoEsperaConsulta; set => tempoEsperaConsulta = value * 1000; }
         public string PathLogs { get => pathLogs; set => pathLogs = value; }
         public string MotivoCancelamento { get => motivoCancelamento; set => motivoCancelamento = value; }
         public string ListaCancelamento { get => listaCancelamento; set => listaCancelamento = value; }
+        public string ListaDownloadArquivo { get => listaDownloadArquivo; set => listaDownloadArquivo = value; }
+        public int TempoEsperaDownload { get => tempoEsperaDownload; set => tempoEsperaDownload = value * 1000; }
 
         public X509Certificate2 GetCertificado()
         {
