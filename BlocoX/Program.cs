@@ -20,12 +20,11 @@ namespace BlocoX
     {
         static void Main(string[] args)
         {
-
+            Console.Title = "Apoio Bloco X";
             Config config = new Config();
             ServicoBlocoX servico = new ServicoBlocoX();
-            string op;
+            string op;         
             
-
             while (true)
             {
 
@@ -37,6 +36,7 @@ namespace BlocoX
                 Console.WriteLine("1 - Enviar XMLs Redução Z.");
                 Console.WriteLine("2 - Consultar Recibos.");
                 Console.WriteLine("3 - Cancelar XMLs Redução Z.");
+                Console.WriteLine("4 - Baixar XMLs Redução Z.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
@@ -182,6 +182,28 @@ namespace BlocoX
                         Console.WriteLine("-------------------------------------------------------------------------------------------\n");
                         Util.SalvaLogRetorno($@"{config.PathLogs}\Cancelamento.csv", $"{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
 
+                    }
+                    
+                }
+
+                if (op == "4")
+                {
+                    config.CarregaParametrosConfig();
+                    Console.WriteLine("Baixando arquivo...\n");
+                   
+                    string[] recibos = File.ReadAllLines(config.ListaDownloadArquivo);
+                    for (int i = 0; i < recibos.Length; i++)
+                    {
+                        Console.WriteLine($"Baixando o XML do recibo {recibos[i]}...");
+                        string xml = Xml.XmlDownloadReducaoZ(recibos[i]);
+                        xml = Xml.AssinarXML(xml, config.GetCertificado());
+                        Util.SalvarArquivoBase64(servico.DownloadXMLReducaoZ(xml));
+                        
+                        if (i < recibos.Length - 1)
+                        {
+                           
+                            Thread.Sleep(config.TempoEsperaDownload);
+                        }
                     }
                     
                 }
