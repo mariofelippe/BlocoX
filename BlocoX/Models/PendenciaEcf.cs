@@ -16,6 +16,15 @@ namespace BlocoX.Models
         private List<Pendencia> pendencias;
         private List<Aviso> avisos;
 
+        public PendenciaEcf(Ecf ecf, int situacaoPafEcfCofigo, string situacaoPafEcfDescricao, int qtdPendencia, int qtdAviso)
+        {
+            Ecf = ecf;
+            SituacaoPafEcfCodigo = situacaoPafEcfCodigo;
+            SituacaoPafEcfDescricao = situacaoPafEcfDescricao;
+            QuantidadePendencias = qtdPendencia;
+            QuantidadeAviso = qtdAviso;
+        }
+
         public Ecf Ecf { get => ecf; set => ecf = value; }
         public int SituacaoPafEcfCodigo { get => situacaoPafEcfCodigo; set => situacaoPafEcfCodigo = value; }
         public string SituacaoPafEcfDescricao { get => situacaoPafEcfDescricao; set => situacaoPafEcfDescricao = value; }
@@ -26,10 +35,19 @@ namespace BlocoX.Models
 
         public void AdicionarPendencia (Pendencia pendencia)
         {
+            if (Pendencias == null)
+            {
+                Pendencias = new List<Pendencia>();
+            }
             Pendencias.Add(pendencia);
         }
         public void AdicionarAviso(Aviso aviso)
         {
+            if (Avisos == null)
+            {
+                Avisos = new List<Aviso>();
+            }
+
             Avisos.Add(aviso);
         }
     }
