@@ -11,6 +11,11 @@ namespace BlocoX.Models
         private int codigo;
         private string descricao;
 
+        public Aviso (int codigo, string descricao)
+        {
+            Codigo = codigo;
+            Descricao = descricao;
+        }
         public int Codigo { get => codigo; set => codigo = value; }
         public string Descricao { get => descricao; set => descricao = value; }
     }
