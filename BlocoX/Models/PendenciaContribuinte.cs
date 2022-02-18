@@ -18,6 +18,10 @@ namespace BlocoX.Models
 
         public void AdicionarPendenciaEcf(PendenciaEcf pendenciaEcf)
         {
+            if (PendenciasEcfs == null)
+            {
+                PendenciasEcfs = new List<PendenciaEcf>();
+            }
             PendenciasEcfs.Add(pendenciaEcf);
         }
     }
