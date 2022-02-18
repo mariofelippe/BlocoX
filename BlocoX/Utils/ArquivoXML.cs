@@ -158,6 +158,56 @@ namespace BlocoX.Utils
             Util.CompatactarXML(nomeCaminho);
             
         }
+
+        public static PendenciaContribuinte GetPendenciaContribuinte(string conteudoXML)
+        {
+
+            PendenciaContribuinte pendenciaContribuinte = new PendenciaContribuinte();
+            
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(conteudoXML);
+
+            Estabelecimento estabelecimento = new Estabelecimento(xml.SelectSingleNode("//IE").InnerText);
+
+            if(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText == "3")
+            {
+                return pendenciaContribuinte;
+            }
+
+            pendenciaContribuinte.DataInicioObrigacao = DateTime.Parse(xml.SelectSingleNode("//DataInicioObrigacao").InnerText);
+            pendenciaContribuinte.Estabelecimento = estabelecimento;
+            XmlNodeList ecfs = xml.SelectNodes("//ReducoesZ/Ecf");
+
+            foreach(XmlNode node in ecfs)
+            {
+                Ecf ecf = new Ecf(node["NumeroFabricacaoEcf"].InnerText);
+                PendenciaEcf pendenciaEcf = new PendenciaEcf(ecf,int.Parse(node["SituacaoPafEcfCodigo"].InnerText), node["SituacaoPafEcfDescricao"].InnerText, int.Parse(node["QuantidadePendencias"].InnerText), int.Parse(node["QuantidadeAvisos"].InnerText));
+                
+                XmlNodeList listaPendencias = node.SelectNodes("//Pendencias/Pendencia");
+                for(int i=0; i < listaPendencias.Count; i++)
+                {
+                    Pendencia pendencia = new Pendencia(int.Parse(listaPendencias[i]["Codigo"].InnerText), listaPendencias[i]["Descricao"].InnerText, int.Parse(listaPendencias[i]["Quantidade"].InnerText));
+                    pendenciaEcf.AdicionarPendencia(pendencia);
+                    
+                }
+                
+                if(node.LastChild.Name == "Avisos")
+                {
+                    XmlNodeList listaAvisos = node["Avisos"].ChildNodes;
+                    for(int i=0; i < listaAvisos.Count; i++)
+                    {
+                        Aviso aviso = new Aviso(int.Parse(listaAvisos[i]["Codigo"].InnerText), listaAvisos[i]["Descricao"].InnerText);
+                        pendenciaEcf.AdicionarAviso(aviso);
+                    }
+                }
+                pendenciaContribuinte.AdicionarPendenciaEcf(pendenciaEcf);
+                
+                
+            }
+            
+            return pendenciaContribuinte;
+           
+        }
     }
 
 }
