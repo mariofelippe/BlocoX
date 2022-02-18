@@ -116,6 +116,21 @@ namespace BlocoX.Utils
             return xml.Replace("'", "\"");
         }
 
+        public static string XmlConsultaPendenciaContribuinte(string ie)
+        {
+
+            string xml = $@"
+<ConsultarPendenciasContribuinte Versao='1.0'>
+    <Mensagem>
+        <IE>{ie}</IE>
+    </Mensagem>
+</ConsultarPendenciasContribuinte>
+";
+            return xml.Replace("'", "\"");
+        }
+
+        
+
         public static string XmlDownloadReducaoZ(string recibo)
         {
             string xml = $@"
