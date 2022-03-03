@@ -31,7 +31,17 @@ namespace BlocoX.Models
         public int QuantidadePendencias { get => quantidadePendencias; set => quantidadePendencias = value; }
         public int QuantidadeAviso { get => quantidadeAviso; set => quantidadeAviso = value; }
         public List<Pendencia> Pendencias { get => pendencias; set => pendencias = value; }
-        public List<Aviso> Avisos { get => avisos; set => avisos = value; }
+        public List<Aviso> Avisos
+        {
+            get {
+                if (avisos == null)
+                {
+                    avisos = new List<Aviso>();                
+                }
+                return avisos;
+            }
+            set => avisos = value;
+        }
 
         public void AdicionarPendencia (Pendencia pendencia)
         {
