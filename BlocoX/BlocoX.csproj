@@ -56,10 +56,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Models\Aviso.cs" />
     <Compile Include="Models\DadosReducao.cs" />
     <Compile Include="Models\Ecf.cs" />
     <Compile Include="Models\Estabelecimento.cs" />
     <Compile Include="Models\PafEcf.cs" />
+    <Compile Include="Models\Pendencia.cs" />
+    <Compile Include="Models\PendenciaEcf.cs" />
+    <Compile Include="Models\PendenciaContribuinte.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Models\ReducaoZ.cs" />
     <Compile Include="Models\TotalizadorParcial.cs" />
@@ -117,6 +121,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ListaConsulta.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ListaConsultarPendenciasContribuinte.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ListaDownloadArquivo.txt">

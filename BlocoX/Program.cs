@@ -37,6 +37,7 @@ namespace BlocoX
                 Console.WriteLine("2 - Consultar Recibos.");
                 Console.WriteLine("3 - Cancelar XMLs Redução Z.");
                 Console.WriteLine("4 - Baixar XMLs Redução Z.");
+                Console.WriteLine("5 - Consultar Pendências Contribuinte.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
@@ -206,6 +207,62 @@ namespace BlocoX
                         }
                     }
                     
+                }
+
+                if (op == "5")
+                {
+                    DateTime data = DateTime.Now;
+                    config.CarregaParametrosConfig();
+                    string[] listaIEs;
+                    if (!File.Exists(config.ListaConsultarPendenciasContribuinte))
+                    {
+                        Console.WriteLine($"O Arquivo {config.ListaConsultarPendenciasContribuinte} não foi localizado");
+                        continue;
+                    }
+                    listaIEs = File.ReadAllLines(config.ListaConsultarPendenciasContribuinte);
+                    if(listaIEs.Length == 0)
+                    {
+                        continue;
+                    }
+                    
+                   
+                    using(FileStream fs = new FileStream($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv", FileMode.Create))
+                    {
+                       
+                        using (StreamWriter writer = new StreamWriter(fs, Encoding.Default))
+                        {
+                            //Escreve o cabeçalho no arquivo,
+                            writer.WriteLine("Inscrição Estadual;Data do início da obrigação;N° de Fabricação do ECF;Tipo;Código da pendência;Quantidade;Descrição");
+
+                            foreach (string ie in listaIEs)
+                            {
+                                Console.WriteLine($"Consultando as pendências do Inscrição {ie}.");
+                                string conteudoXml = Xml.XmlConsultaPendenciaContribuinte(ie);
+                                conteudoXml = Xml.AssinarXML(conteudoXml, config.GetCertificado());
+                                PendenciaContribuinte contribuinte = ArquivoXML.GetPendenciaContribuinte(servico.ConsultaPendenciaContribuinte(conteudoXml));
+                                                         
+                                foreach (PendenciaEcf pendenciaEcf in contribuinte.PendenciasEcfs)
+                                {
+                                    foreach (Pendencia pendencia in pendenciaEcf.Pendencias)
+                                    {
+                                        writer.WriteLine($"{contribuinte.Estabelecimento.Ie};{contribuinte.DataInicioObrigacao};{pendenciaEcf.Ecf.NumeroFabricacao};Pendência;{pendencia.Codigo};{pendencia.Quantidade};{pendencia.Descricao}");
+                                    }
+
+                                    foreach (Aviso aviso in pendenciaEcf.Avisos)
+                                    {
+                                        writer.WriteLine($"{contribuinte.Estabelecimento.Ie};{contribuinte.DataInicioObrigacao};{pendenciaEcf.Ecf.NumeroFabricacao};Aviso;{aviso.Codigo};;{aviso.Descricao}");
+
+                                    }
+                                }
+
+                            }
+                            
+                        }
+
+                    }
+                  
+
+
                 }
             }
 
