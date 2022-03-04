@@ -30,7 +30,17 @@ namespace BlocoX.Models
         public string SituacaoPafEcfDescricao { get => situacaoPafEcfDescricao; set => situacaoPafEcfDescricao = value; }
         public int QuantidadePendencias { get => quantidadePendencias; set => quantidadePendencias = value; }
         public int QuantidadeAviso { get => quantidadeAviso; set => quantidadeAviso = value; }
-        public List<Pendencia> Pendencias { get => pendencias; set => pendencias = value; }
+        public List<Pendencia> Pendencias
+        { 
+            get
+            {
+                if (pendencias == null)
+                {
+                    pendencias = new List<Pendencia>();
+                }
+                return pendencias;
+            }
+            set => pendencias = value; }
         public List<Aviso> Avisos
         {
             get {
