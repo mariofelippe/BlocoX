@@ -171,6 +171,7 @@ namespace BlocoX.Utils
 
             if(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText == "3")
             {
+                Console.WriteLine(xml.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText);
                 return pendenciaContribuinte;
             }
 
@@ -183,7 +184,8 @@ namespace BlocoX.Utils
                 Ecf ecf = new Ecf(node["NumeroFabricacaoEcf"].InnerText);
                 PendenciaEcf pendenciaEcf = new PendenciaEcf(ecf,int.Parse(node["SituacaoPafEcfCodigo"].InnerText), node["SituacaoPafEcfDescricao"].InnerText, int.Parse(node["QuantidadePendencias"].InnerText), int.Parse(node["QuantidadeAvisos"].InnerText));
                 
-                XmlNodeList listaPendencias = node.SelectNodes("//Pendencias/Pendencia");
+                XmlNodeList listaPendencias = node["Pendencias"].ChildNodes;
+                
                 for(int i=0; i < listaPendencias.Count; i++)
                 {
                     Pendencia pendencia = new Pendencia(int.Parse(listaPendencias[i]["Codigo"].InnerText), listaPendencias[i]["Descricao"].InnerText, int.Parse(listaPendencias[i]["Quantidade"].InnerText));
