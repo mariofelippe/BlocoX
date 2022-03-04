@@ -31,6 +31,7 @@ namespace BlocoX.Utils
         private string listaCancelamento;
         private string listaDownloadArquivo;
         private int tempoEsperaDownload;
+        private string listaConsultarPendenciasContribuinte;
         public Config()
         {
             CarregaParametrosConfig();  
@@ -56,6 +57,7 @@ namespace BlocoX.Utils
             ListaCancelamento = ConfigurationManager.AppSettings.Get("ListaCancelamento");
             ListaDownloadArquivo = ConfigurationManager.AppSettings.Get("ListaDownloadArquivo");
             TempoEsperaDownload = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaDownload"));
+            ListaConsultarPendenciasContribuinte = ConfigurationManager.AppSettings.Get("ListaConsultarPendenciasContribuinte");
 
 
         }
@@ -76,6 +78,7 @@ namespace BlocoX.Utils
         public string ListaCancelamento { get => listaCancelamento; set => listaCancelamento = value; }
         public string ListaDownloadArquivo { get => listaDownloadArquivo; set => listaDownloadArquivo = value; }
         public int TempoEsperaDownload { get => tempoEsperaDownload; set => tempoEsperaDownload = value * 1000; }
+        public string ListaConsultarPendenciasContribuinte { get => listaConsultarPendenciasContribuinte; set => listaConsultarPendenciasContribuinte = value; }
 
         public X509Certificate2 GetCertificado()
         {
