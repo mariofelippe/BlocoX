@@ -117,6 +117,22 @@ namespace BlocoX.Services
             return dados;
         }
 
+        public string ConsultaPendenciaContribuinte(string xml)
+        {
+
+            string xmlRetorno = string.Empty;
+
+            try
+            {
+                xmlRetorno = client.ConsultarPendenciasContribuinte(xml);              
+               
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao tentar consultar as pendências: {e.Message}");
+            }
+            return xmlRetorno;
+        }
         public Byte[] Compcatar(string conteudo, string nomeArquivo)
         {
 
