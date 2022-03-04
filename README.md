@@ -23,6 +23,7 @@ Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar n
 - [X] Compactar XML.
 - [X] Gerar Relatório de Arquivos Processados.
 - [X] Baixar XMLs Reducação Z.
+- [X] Consultar pendências contribuinte.
 
 ### Problemas corrigidos pela ferramenta:
 
@@ -45,6 +46,7 @@ Opções:
 2 - Consultar Recibos.
 3 - Cancelar XMLs Redução Z.
 4 - Baixar XMLs Redução Z.
+5 - Consultar Pendências Contribuinte.
 99 - Sair.
 
 Opção:
@@ -66,7 +68,8 @@ TempoEsperaEnvio| 0 | Tempo de espera entre os envios.
 ListaConsulta| ListaConsulta.txt | Lista com os recibos para consultar o status do processamento.
 TempoEsperaConsulta| 0 | Tempo de espera entre as consultas.
 ListaDownloadArquivo| ListaDownloadArquivo.txt | Lista de recibos para download dos XMLs.
-TempoEsperaDownload| 0 | Tempo de espera entre os downloads. 
+TempoEsperaDownload| 0 | Tempo de espera entre os downloads.
+ListaConsultarPendenciasContribuinte| ListaConsultarPendenciasContribuinte.txt | Lista das IEs para consulta das pendências.
 PathXML| XMLs | Diretório com os XMLs a serem processados e enviados. 
 PathLogs| Logs | Diretório onde são armazenados os relatórios e Logs da ferramenta. 
 AjustaCredencimanetoPaf| false | Parâmetro para ajuste do credenciamento PAF. Se true, ajustará o credencimaneto caso seja diferente do parametrizado. 
