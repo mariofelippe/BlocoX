@@ -166,15 +166,13 @@ namespace BlocoX.Utils
             
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(conteudoXML);
-
-            Estabelecimento estabelecimento = new Estabelecimento(xml.SelectSingleNode("//IE").InnerText);
-
-            if(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText == "3")
+            
+            if(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText != "0")
             {
                 Console.WriteLine(xml.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText);
                 return pendenciaContribuinte;
             }
-
+            Estabelecimento estabelecimento = new Estabelecimento(xml.SelectSingleNode("//IE").InnerText);
             pendenciaContribuinte.DataInicioObrigacao = DateTime.Parse(xml.SelectSingleNode("//DataInicioObrigacao").InnerText);
             pendenciaContribuinte.Estabelecimento = estabelecimento;
             XmlNodeList ecfs = xml.SelectNodes("//ReducoesZ/Ecf");
@@ -183,15 +181,18 @@ namespace BlocoX.Utils
             {
                 Ecf ecf = new Ecf(node["NumeroFabricacaoEcf"].InnerText);
                 PendenciaEcf pendenciaEcf = new PendenciaEcf(ecf,int.Parse(node["SituacaoPafEcfCodigo"].InnerText), node["SituacaoPafEcfDescricao"].InnerText, int.Parse(node["QuantidadePendencias"].InnerText), int.Parse(node["QuantidadeAvisos"].InnerText));
-                
-                XmlNodeList listaPendencias = node["Pendencias"].ChildNodes;
-                
-                for(int i=0; i < listaPendencias.Count; i++)
+                if(node["QuantidadePendencias"].InnerText != "0")
                 {
-                    Pendencia pendencia = new Pendencia(int.Parse(listaPendencias[i]["Codigo"].InnerText), listaPendencias[i]["Descricao"].InnerText, int.Parse(listaPendencias[i]["Quantidade"].InnerText));
-                    pendenciaEcf.AdicionarPendencia(pendencia);
-                    
+                    XmlNodeList listaPendencias = node["Pendencias"].ChildNodes;
+
+                    for (int i = 0; i < listaPendencias.Count; i++)
+                    {
+                        Pendencia pendencia = new Pendencia(int.Parse(listaPendencias[i]["Codigo"].InnerText), listaPendencias[i]["Descricao"].InnerText, int.Parse(listaPendencias[i]["Quantidade"].InnerText));
+                        pendenciaEcf.AdicionarPendencia(pendencia);
+
+                    }
                 }
+                
                 
                 if(node.LastChild.Name == "Avisos")
                 {
