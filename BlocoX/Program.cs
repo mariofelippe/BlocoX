@@ -224,7 +224,8 @@ namespace BlocoX
                     {
                         continue;
                     }
-                    
+
+                    Console.WriteLine("\nConsultandos as Pendências...\n");
                    
                     using(FileStream fs = new FileStream($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv", FileMode.Create))
                     {
@@ -250,7 +251,7 @@ namespace BlocoX
 
                                     foreach (Aviso aviso in pendenciaEcf.Avisos)
                                     {
-                                        writer.WriteLine($"{contribuinte.Estabelecimento.Ie};{contribuinte.DataInicioObrigacao};{pendenciaEcf.Ecf.NumeroFabricacao};Aviso;{aviso.Codigo};;{aviso.Descricao}");
+                                        writer.WriteLine($"{contribuinte.Estabelecimento.Ie};{contribuinte.DataInicioObrigacao};{pendenciaEcf.Ecf.NumeroFabricacao};Aviso;{aviso.Codigo};1;{aviso.Descricao}");
 
                                     }
                                 }
@@ -258,7 +259,7 @@ namespace BlocoX
                             }
                             
                         }
-
+                        Console.WriteLine($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv gerado na área!\n");
                     }
                   
 

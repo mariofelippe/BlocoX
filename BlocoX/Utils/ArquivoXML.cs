@@ -166,7 +166,7 @@ namespace BlocoX.Utils
             
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(conteudoXML);
-            
+
             if(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText != "0")
             {
                 Console.WriteLine(xml.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText);
