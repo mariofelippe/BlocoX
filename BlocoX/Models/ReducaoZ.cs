@@ -72,5 +72,17 @@ namespace BlocoX.Models
             string nome = "Reducao Z " + dadosReducao.DataReferencia.ToString().Split(' ')[0].Replace("/","");
             return nome;
         }
+
+        public void AjustarSequenciaTotalizador()
+        {
+            int seq = 1;
+            foreach (TotalizadorParcial totalizador in totalizadores)
+            {
+                if(totalizador.Nome.Contains("T")){
+                    totalizador.Nome = seq.ToString().PadLeft(2, '0') + "T" +totalizador.Nome.Split('T')[1];
+                    seq += 1;
+                }
+            }
+        }
     }
 }
