@@ -108,9 +108,9 @@
     <None Include="Connected Services\SefazSC\BlocoX.SefazSC.TransmitirArquivoResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\SefazSC\BlocoX.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\SefazSC\BlocoX1.wsdl" />
     <None Include="Connected Services\SefazSC\configuration91.svcinfo" />
     <None Include="Connected Services\SefazSC\configuration.svcinfo" />
     <None Include="Connected Services\SefazSC\Reference.svcmap">

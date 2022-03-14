@@ -442,10 +442,10 @@
   <wsdl:service name="BlocoX">
     <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Web Service para manutenção de arquivos do Bloco X</wsdl:documentation>
     <wsdl:port name="BlocoXSoap" binding="tns:BlocoXSoap">
-      <soap:address location="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
+      <soap:address location="http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
     </wsdl:port>
     <wsdl:port name="BlocoXSoap12" binding="tns:BlocoXSoap12">
-      <soap12:address location="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
+      <soap12:address location="http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

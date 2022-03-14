@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BlocoX.wsdl" MetadataType="Wsdl" ID="05c14a2c-7e49-4ac1-a031-66c77018d018" SourceId="1" SourceUrl="https://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx?wsdl" />
+    <MetadataFile FileName="BlocoX1.wsdl" MetadataType="Wsdl" ID="8ee60415-6b97-4400-9765-579a9cc962fd" SourceId="1" SourceUrl="http://webservices.sef.sc.gov.br/wsDfeSiv/BlocoX.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
