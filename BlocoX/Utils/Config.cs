@@ -27,6 +27,7 @@ namespace BlocoX.Utils
         private bool ajustaCredenciamento;
         private bool ajustaVendaBrutaDiaria;
         private bool ajustaValorTotalizador;
+        private bool ajustaSequenciaTotalizador;
         private string motivoCancelamento;
         private string listaCancelamento;
         private string listaDownloadArquivo;
@@ -53,6 +54,7 @@ namespace BlocoX.Utils
             AjustaCredenciamento = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaCredencimanetoPaf"));
             AjustaVendaBrutaDiaria = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaVendaBrutaDiaria"));
             AjustaValorTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaValorTotalizador"));
+            AjustaSequenciaTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaSequenciaTotalizador"));
             MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCancelamento");
             ListaCancelamento = ConfigurationManager.AppSettings.Get("ListaCancelamento");
             ListaDownloadArquivo = ConfigurationManager.AppSettings.Get("ListaDownloadArquivo");
@@ -79,6 +81,7 @@ namespace BlocoX.Utils
         public string ListaDownloadArquivo { get => listaDownloadArquivo; set => listaDownloadArquivo = value; }
         public int TempoEsperaDownload { get => tempoEsperaDownload; set => tempoEsperaDownload = value * 1000; }
         public string ListaConsultarPendenciasContribuinte { get => listaConsultarPendenciasContribuinte; set => listaConsultarPendenciasContribuinte = value; }
+        public bool AjustaSequenciaTotalizador { get => ajustaSequenciaTotalizador; set => ajustaSequenciaTotalizador = value; }
 
         public X509Certificate2 GetCertificado()
         {
