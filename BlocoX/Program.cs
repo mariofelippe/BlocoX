@@ -119,6 +119,12 @@ namespace BlocoX
                             reducaoZ.AjustarVarlorVendaBrutaDiaria();
                         }
 
+                        if (config.AjustaSequenciaTotalizador)
+                        {
+                            Console.WriteLine("Ajustando a sequência dos totalizadores...");
+                            reducaoZ.AjustarSequenciaTotalizador();
+                        }
+
                         string strXML = Xml.XmlReducaoZ(estabelecimento, paf, reducaoZ);
 
                         strXML = Xml.AssinarXML(strXML,config.GetCertificado());
