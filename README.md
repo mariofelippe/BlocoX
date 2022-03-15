@@ -30,6 +30,7 @@ Para essa aplicação, algumas funcionalidades serão desenvolvidadas para apoiar n
 - Correção da venda bruta diária.
 - Ajuste de credenciamento.
 - Correção dos valores dos totalizadores parcial.
+- Ajuste nas sequência dos totalizadores parcial.
 
 
 ### Utilização da Ferramenta
@@ -75,3 +76,4 @@ PathLogs| Logs | Diretório onde são armazenados os relatórios e Logs da ferramen
 AjustaCredencimanetoPaf| false | Parâmetro para ajuste do credenciamento PAF. Se true, ajustará o credencimaneto caso seja diferente do parametrizado. 
 AjustaVendaBrutaDiaria| false | Parâmetro para ajuste da venda bruta. Se true, a ferramenta calculará o valor e ajustará caso esteja diferente do arquivo processado.
 AjustaValorTotalizador|  false | Parâmetro para ajuste do valor dos totalizadores. Se true, a ferramente calculará e ajustará o valor de cada totalizador caso esteja diferente.
+AjustaSequenciaTotalizador|  false | Parâmetro para ajuste da sequência dos totalizadores. Se true, a ferramente ajustará a sequência de cada totalizador.
