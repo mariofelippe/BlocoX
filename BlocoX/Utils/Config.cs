@@ -30,6 +30,7 @@ namespace BlocoX.Utils
         private bool ajustaSequenciaTotalizador;
         private string motivoCancelamento;
         private string listaCancelamento;
+        private int tempoEsperaCancelamento;
         private string listaDownloadArquivo;
         private int tempoEsperaDownload;
         private string listaConsultarPendenciasContribuinte;
@@ -57,6 +58,7 @@ namespace BlocoX.Utils
             AjustaSequenciaTotalizador = bool.Parse(ConfigurationManager.AppSettings.Get("AjustaSequenciaTotalizador"));
             MotivoCancelamento = ConfigurationManager.AppSettings.Get("MotivoCancelamento");
             ListaCancelamento = ConfigurationManager.AppSettings.Get("ListaCancelamento");
+            TempoEsperaCancelamento = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaCancelamento"));
             ListaDownloadArquivo = ConfigurationManager.AppSettings.Get("ListaDownloadArquivo");
             TempoEsperaDownload = int.Parse(ConfigurationManager.AppSettings.Get("TempoEsperaDownload"));
             ListaConsultarPendenciasContribuinte = ConfigurationManager.AppSettings.Get("ListaConsultarPendenciasContribuinte");
@@ -78,6 +80,7 @@ namespace BlocoX.Utils
         public string PathLogs { get => pathLogs; set => pathLogs = value; }
         public string MotivoCancelamento { get => motivoCancelamento; set => motivoCancelamento = value; }
         public string ListaCancelamento { get => listaCancelamento; set => listaCancelamento = value; }
+        public int TempoEsperaCancelamento { get => tempoEsperaCancelamento ; set => tempoEsperaCancelamento = 1000 * value; }
         public string ListaDownloadArquivo { get => listaDownloadArquivo; set => listaDownloadArquivo = value; }
         public int TempoEsperaDownload { get => tempoEsperaDownload; set => tempoEsperaDownload = value * 1000; }
         public string ListaConsultarPendenciasContribuinte { get => listaConsultarPendenciasContribuinte; set => listaConsultarPendenciasContribuinte = value; }
