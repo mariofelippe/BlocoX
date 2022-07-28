@@ -129,8 +129,6 @@ namespace BlocoX.Utils
             return xml.Replace("'", "\"");
         }
 
-        
-
         public static string XmlDownloadReducaoZ(string recibo)
         {
             string xml = $@"
@@ -142,10 +140,22 @@ namespace BlocoX.Utils
             return xml.Replace("'","\"");
         }
 
+        public static string XmlListarArquivos(string ie)
+        {
+            StringBuilder xml = new StringBuilder();
+            xml.AppendLine("<ListarArquivos Versao=\"1.0\">");
+            xml.AppendLine("<Mensagem>");
+            xml.AppendLine($"<IE>{ie}</IE>");
+            xml.AppendLine("</Mensagem>");
+            xml.AppendLine("</ListarArquivos>");
+
+            return xml.ToString();
+        }
+
         public static string AssinarXML(string conteudoXML, X509Certificate2 certificado)
         {
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.PreserveWhitespace = true;            
+            //xmlDocument.PreserveWhitespace = true;            
             xmlDocument.LoadXml(conteudoXML);
             SignedXml signedXml = new SignedXml(xmlDocument);
             signedXml.SigningKey = certificado.PrivateKey;
@@ -163,5 +173,34 @@ namespace BlocoX.Utils
             xmlDocument.DocumentElement.AppendChild(xmlDocument.ImportNode(signedXml.GetXml(), true));
             return xmlDocument.InnerXml;
         }
+
+        public static bool ValidaXMLAssinatura(string conteudoXML, X509Certificate2 certificado)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            // xmlDocument.PreserveWhitespace = true;
+            xmlDocument.LoadXml(conteudoXML);
+            SignedXml signedXml = new SignedXml(xmlDocument);
+            XmlNodeList node = xmlDocument.GetElementsByTagName("Signature");
+            signedXml.LoadXml((XmlElement)node[0]);
+            
+            
+       
+            return signedXml.CheckSignature();
+        }
+
+        public static bool ValidaXMLAssinaturaArquivo(string arquivo, X509Certificate2 certificado)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            //xmlDocument.PreserveWhitespace = true;
+            xmlDocument.Load(arquivo);
+            SignedXml signedXml = new SignedXml(xmlDocument);
+            XmlNodeList node = xmlDocument.GetElementsByTagName("Signature");
+            signedXml.LoadXml((XmlElement)node[0]);
+
+
+
+            return signedXml.CheckSignature();
+        }
+
     }
 }
