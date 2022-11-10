@@ -133,6 +133,24 @@ namespace BlocoX.Services
             }
             return xmlRetorno;
         }
+
+        public string ListarArquivos(string xml)
+        {
+            string xmlRetorno = string.Empty;
+
+            try
+            {
+                xmlRetorno = client.ListarArquivos(xml);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Erro ao tentar consultar as pendências: {e.Message}");
+            }
+            return xmlRetorno;
+
+        }
+
         public Byte[] Compcatar(string conteudo, string nomeArquivo)
         {
 
@@ -145,7 +163,7 @@ namespace BlocoX.Services
                     // Cria o item a ser adicionado dentro do .zip com o nome especificado.
                     ZipArchiveEntry entry = zip.CreateEntry(nomeArquivo + ".xml");
 
-                    using (MemoryStream fileStream = new MemoryStream(Encoding.ASCII.GetBytes(conteudo)))
+                    using (MemoryStream fileStream = new MemoryStream(Encoding.UTF8.GetBytes(conteudo)))
                     {
                         //Adiciona os Bytes no ZIp
                         using (Stream entryStrem = entry.Open())
