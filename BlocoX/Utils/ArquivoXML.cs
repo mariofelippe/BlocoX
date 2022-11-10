@@ -152,7 +152,7 @@ namespace BlocoX.Utils
         public static void SalvarArquivoXML(string nomeCaminho, string conteudoXML)
         {
             XmlDocument xmlArquivo = new XmlDocument();
-            xmlArquivo.PreserveWhitespace = true;
+            //xmlArquivo.PreserveWhitespace = true;
             xmlArquivo.LoadXml(conteudoXML);
             xmlArquivo.Save(nomeCaminho);
             Util.CompatactarXML(nomeCaminho);
@@ -210,6 +210,44 @@ namespace BlocoX.Utils
             
             return pendenciaContribuinte;
            
+        }
+
+        public static ListaArquivo GetListaArquivo(string conteudoXML)
+        {
+            ListaArquivo listaArquivo = new ListaArquivo();
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(conteudoXML);
+
+            if (xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText != "0")
+            {
+                Console.WriteLine(xml.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText);
+                return listaArquivo;
+            }
+
+            listaArquivo.SituacaoOperacaoCodigo = int.Parse(xml.SelectSingleNode("//SituacaoOperacaoCodigo").InnerText);
+            listaArquivo.SituacaoOperacaoDescricao = xml.SelectSingleNode("//SituacaoOperacaoDescricao").InnerText;
+            listaArquivo.Ie = xml.SelectSingleNode("//IE").InnerText;
+
+            var nodes = xml.SelectNodes("//Arquivos//Arquivo");
+
+            foreach (XmlNode node in nodes)
+            {
+                Arquivo arquivo = new Arquivo(node["Recibo"].InnerText, 
+                    node["NumeroFabricacaoEcf"].InnerText,
+                    DateTime.Parse(node["DataReferencia"].InnerText),
+                    DateTime.Parse(node["DataHoraRecepcao"].InnerText),
+                    DateTime.Parse(node["DataHoraProcessamento"].InnerText),
+                    int.Parse(node["TipoRecepcaoCodigo"].InnerText),
+                    node["TipoRecepcaoDescricao"].InnerText,
+                    int.Parse(node["SituacaoProcessamentoCodigo"].InnerText),
+                    node["SituacaoProcessamentoDescricao"].InnerText);
+                
+                listaArquivo.AdicionarArquivo(arquivo);
+               
+            }
+
+            return listaArquivo;
         }
     }
 
