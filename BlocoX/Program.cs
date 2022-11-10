@@ -23,8 +23,8 @@ namespace BlocoX
             Console.Title = "Apoio Bloco X";
             Config config = new Config();
             ServicoBlocoX servico = new ServicoBlocoX();
-            string op;         
-            
+            string op;
+
             while (true)
             {
 
@@ -38,19 +38,22 @@ namespace BlocoX
                 Console.WriteLine("3 - Cancelar XMLs Redução Z.");
                 Console.WriteLine("4 - Baixar XMLs Redução Z.");
                 Console.WriteLine("5 - Consultar Pendências Contribuinte.");
+                Console.WriteLine("6 - Validar assinatura XMLs.");
+                Console.WriteLine("7 - Listar Arquivos.");
                 Console.WriteLine("99 - Sair.");
                 Console.WriteLine();
                 Console.Write("Opção: ");
                 op = Console.ReadLine();
 
-                if(op == "99")
+                if (op == "99")
                 {
                     break;
                 }
 
-                if(op == "1")
+                if (op == "1")
                 {
-                   
+
+                    File.WriteAllText(config.ListaConsulta, "");
                     config.CarregaParametrosConfig();
                     string listaXML = config.ListaXML;
                     Console.WriteLine("\nProcessando arquivos...\n");
@@ -64,7 +67,7 @@ namespace BlocoX
                     for (int i = 0; i < arquivos.Length; i++)
                     {
                         Console.WriteLine("\n-------------------------------------------------------------------------------------------------");
-                        
+
                         if (!File.Exists(arquivos[i]))
                         {
                             Console.WriteLine($"Arquivo \"{arquivos[i]}\" não localizado!");
@@ -82,7 +85,7 @@ namespace BlocoX
                         Estabelecimento estabelecimento = ArquivoXML.GetEstabelecimento();
                         DadosReducao dadosReducao = ArquivoXML.GetDadosReducao();
                         List<TotalizadorParcial> totalizadores = ArquivoXML.GetTotalizadores();
-                        
+
 
                         Console.WriteLine($"Credenciamento: {paf.NumeroCredenciamento}");
                         Console.WriteLine($"IE: {estabelecimento.Ie}");
@@ -95,12 +98,12 @@ namespace BlocoX
                         Console.WriteLine($"GT: {dadosReducao.GT}");
                         Console.WriteLine($"Venda Bruta: {dadosReducao.VendaBrutaDiaria}\n");
                         Console.WriteLine("Totalizadores:");
-                        foreach(TotalizadorParcial totalizador in totalizadores)
+                        foreach (TotalizadorParcial totalizador in totalizadores)
                         {
                             Console.WriteLine($"Nome: {totalizador.Nome}");
                             Console.WriteLine($"Valor: {totalizador.Valor}");
 
-                            if(config.AjustaValorTotalizador && totalizador.Valor != totalizador.CalculaValorTotalizador())
+                            if (config.AjustaValorTotalizador && totalizador.Valor != totalizador.CalculaValorTotalizador())
                             {
                                 Console.WriteLine($"O valor do totalizador está divergênte. Ajustando para {totalizador.CalculaValorTotalizador()}");
                                 totalizador.AjustaValorTotalizador();
@@ -127,16 +130,27 @@ namespace BlocoX
 
                         string strXML = Xml.XmlReducaoZ(estabelecimento, paf, reducaoZ);
 
-                        strXML = Xml.AssinarXML(strXML,config.GetCertificado());
+                        strXML = Xml.AssinarXML(strXML, config.GetCertificado());
                         ArquivoXML.SalvarArquivoXML(arquivos[i], strXML);
-                        Console.WriteLine("\nEnviando XML...\n");
-                        Retorno retorno = servico.EnviaXMLReducaoZ(strXML, reducaoZ.GeraNomeReducaoZ());
-                        Console.WriteLine("Recibo: " + retorno.Recibo);
-                        Console.WriteLine("Codigo Processamento: " + retorno.CodigoProcessamento);
-                        Console.WriteLine("Descrição: " + retorno.Descricao);
-                        Console.WriteLine("Mensagem: " + retorno.Mensagem);
-                        Util.SalvaLogRetorno($@"{config.PathLogs}\EnvioXmlReducaoZ.csv", $"{estabelecimento.Ie};{reducaoZ.ECF.NumeroFabricacao};{reducaoZ.DadosReducao.CRZ};{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
-                        Thread.Sleep(config.TempoEsperaEnvio);
+
+                        if (Xml.ValidaXMLAssinatura(strXML, config.GetCertificado()))
+                        {
+                            Console.WriteLine("\nEnviando XML...\n");
+                            Retorno retorno = servico.EnviaXMLReducaoZ(strXML, reducaoZ.GeraNomeReducaoZ());
+                            Console.WriteLine("Recibo: " + retorno.Recibo);
+                            Console.WriteLine("Codigo Processamento: " + retorno.CodigoProcessamento);
+                            Console.WriteLine("Descrição: " + retorno.Descricao);
+                            Console.WriteLine("Mensagem: " + retorno.Mensagem);
+                            Util.SalvaLogRetorno($@"{config.PathLogs}\EnvioXmlReducaoZ.csv", $"{estabelecimento.Ie};{reducaoZ.ECF.NumeroFabricacao};{reducaoZ.DadosReducao.CRZ};{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
+                            if (retorno.Recibo != null)
+                                File.AppendAllText(config.ListaConsulta, $"{retorno.Recibo}\r\n");
+                            Thread.Sleep(config.TempoEsperaEnvio);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"O arquivo {arquivos[i]} não passou na validação da assinatura.");
+                        }
+
                     }
 
                     Console.WriteLine($"\n{arquivos.Length} arquivo(s) processado(s) em {DateTime.Now - dataInicial}.");
@@ -146,14 +160,15 @@ namespace BlocoX
                 {
                     config.CarregaParametrosConfig();
                     Console.WriteLine("\nConsultando...");
-                   
-                    string listaConsulta = config.ListaConsulta;                                       
+
+                    string listaConsulta = config.ListaConsulta;
                     using (StreamReader linha = new StreamReader(config.ListaConsulta))
                     {
                         string recibo;
                         while ((recibo = linha.ReadLine()) != null)
                         {
-
+                            if (recibo.Trim() == "")
+                                continue;
                             Console.WriteLine($"Consultando o recibo: {recibo}.\n");
                             Retorno retorno = servico.ConsultarProcessamentoArquivo(recibo);
                             Console.WriteLine("Recibo: " + retorno.Recibo);
@@ -162,11 +177,11 @@ namespace BlocoX
                             Util.SalvaLogRetorno($@"{config.PathLogs}\ConsultaRecibo.csv", $"{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao}");
                             Console.WriteLine("-------------------------------------------------------------------------------------------\n");
                             Thread.Sleep(config.TempoEsperaConsulta);
- 
+
                         }
                     }
-                   
-         
+
+
                 }
 
                 if (op == "3")
@@ -175,29 +190,29 @@ namespace BlocoX
                     Console.WriteLine("\nCancelando XML...");
 
                     string[] listaRecibo = File.ReadAllLines(config.ListaCancelamento);
-                    
+
                     for (int i = 0; i < listaRecibo.Length; i++)
                     {
-                        Console.WriteLine($"Cancelando a redução do recibi {listaRecibo[i]}...\n");
+                        Console.WriteLine($"Cancelando a redução do recibo {listaRecibo[i]}...\n");
                         string xml = Xml.XmlCancealmentoReducaoZ(listaRecibo[i], config.MotivoCancelamento);
                         xml = Xml.AssinarXML(xml, config.GetCertificado());
-                        Retorno retorno = servico.CancelaReducaoZ(xml);                        
+                        Retorno retorno = servico.CancelaReducaoZ(xml);
                         Console.WriteLine($"Recibo: {retorno.Recibo}");
                         Console.WriteLine($"Codigo Processamento: {retorno.CodigoProcessamento}");
                         Console.WriteLine($"Descrição: {retorno.Descricao}");
                         Console.WriteLine($"Mensagem: {retorno.Mensagem}");
                         Console.WriteLine("-------------------------------------------------------------------------------------------\n");
                         Util.SalvaLogRetorno($@"{config.PathLogs}\Cancelamento.csv", $"{retorno.Recibo};{retorno.CodigoProcessamento};{retorno.Descricao};{retorno.Mensagem}");
-
+                        Thread.Sleep(config.TempoEsperaCancelamento);
                     }
-                    
+
                 }
 
                 if (op == "4")
                 {
                     config.CarregaParametrosConfig();
                     Console.WriteLine("Baixando arquivo...\n");
-                   
+
                     string[] recibos = File.ReadAllLines(config.ListaDownloadArquivo);
                     for (int i = 0; i < recibos.Length; i++)
                     {
@@ -205,14 +220,14 @@ namespace BlocoX
                         string xml = Xml.XmlDownloadReducaoZ(recibos[i]);
                         xml = Xml.AssinarXML(xml, config.GetCertificado());
                         Util.SalvarArquivoBase64(servico.DownloadXMLReducaoZ(xml));
-                        
+
                         if (i < recibos.Length - 1)
                         {
-                           
+
                             Thread.Sleep(config.TempoEsperaDownload);
                         }
                     }
-                    
+
                 }
 
                 if (op == "5")
@@ -226,16 +241,16 @@ namespace BlocoX
                         continue;
                     }
                     listaIEs = File.ReadAllLines(config.ListaConsultarPendenciasContribuinte);
-                    if(listaIEs.Length == 0)
+                    if (listaIEs.Length == 0)
                     {
                         continue;
                     }
 
                     Console.WriteLine("\nConsultandos as Pendências...\n");
-                   
-                    using(FileStream fs = new FileStream($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv", FileMode.Create))
+
+                    using (FileStream fs = new FileStream($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv", FileMode.Create))
                     {
-                       
+
                         using (StreamWriter writer = new StreamWriter(fs, Encoding.Default))
                         {
                             //Escreve o cabeçalho no arquivo,
@@ -247,7 +262,7 @@ namespace BlocoX
                                 string conteudoXml = Xml.XmlConsultaPendenciaContribuinte(ie);
                                 conteudoXml = Xml.AssinarXML(conteudoXml, config.GetCertificado());
                                 PendenciaContribuinte contribuinte = ArquivoXML.GetPendenciaContribuinte(servico.ConsultaPendenciaContribuinte(conteudoXml));
-                                                         
+
                                 foreach (PendenciaEcf pendenciaEcf in contribuinte.PendenciasEcfs)
                                 {
                                     foreach (Pendencia pendencia in pendenciaEcf.Pendencias)
@@ -263,20 +278,108 @@ namespace BlocoX
                                 }
 
                             }
-                            
+
                         }
                         Console.WriteLine($"PendenciasContribuinte_{data.ToString("ddMMyyyy_HHmmss")}.csv gerado na área!\n");
                     }
-                  
+
 
 
                 }
+
+                if (op == "6")
+                {
+                    string listaXML = config.ListaXML;
+                    Console.WriteLine("\nProcessando arquivos...\n");
+                    if (!File.Exists(listaXML))
+                    {
+                        Console.WriteLine($"O arquivo {listaXML} não foi localizado!\n");
+                        continue;
+                    }
+                    string[] arquivos = File.ReadAllLines(listaXML);
+                    DateTime dataInicial = DateTime.Now;
+                    for (int i = 0; i < arquivos.Length; i++)
+                    {
+                        Console.WriteLine("\n-------------------------------------------------------------------------------------------------");
+
+                        if (!File.Exists(arquivos[i]))
+                        {
+                            Console.WriteLine($"Arquivo \"{arquivos[i]}\" não localizado!");
+                            continue;
+                        }
+                        if (!ArquivoXML.ValidaXMLReducaoZ(arquivos[i]))
+                        {
+                            Console.WriteLine($"Arquivo {arquivos[i]} inválido!");
+                            continue;
+                        }
+                        Console.WriteLine($"\nValidando arquivo {arquivos[i]}...\n");
+                        if (Xml.ValidaXMLAssinaturaArquivo(arquivos[i], config.GetCertificado()))
+                        {
+                            Console.WriteLine($"{arquivos[i]} assinatura válida!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"O arquivo {arquivos[i]} não possui assnatura valida.");
+                        }
+
+                    }
+                }
+
+                if (op == "7")
+                {
+                    DateTime data = DateTime.Now;
+                    config.CarregaParametrosConfig();
+                    string[] listaIEs;
+                    if (!File.Exists(config.ListaConsultarPendenciasContribuinte))
+                    {
+                        Console.WriteLine($"O Arquivo {config.ListaConsultarPendenciasContribuinte} não foi localizado");
+                        continue;
+                    }
+                    listaIEs = File.ReadAllLines(config.ListaConsultarPendenciasContribuinte);
+                    if (listaIEs.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    Console.WriteLine("\nConsultandos últimos arquivos...\n");
+
+                    using (FileStream fs = new FileStream($"Arquivos_{data.ToString("ddMMyyyy_HHmmss")}.csv", FileMode.Create))
+                    {
+
+                        using (StreamWriter writer = new StreamWriter(fs, Encoding.Default))
+                        {
+                            //Escreve o cabeçalho no arquivo,
+                            writer.WriteLine("Inscrição Estadual;Tipo Recepção;N° de Fabricação do ECF;Data Referência;Data e Hora Recepção;Data e Hora Processamento;Codigo Recepção; Código Processamento; Descrição;Recibo");
+
+                            foreach (string ie in listaIEs)
+                            {
+                                Console.WriteLine($"Consultando as pendências do Inscrição {ie}.");
+                                string conteudoXml = Xml.XmlListarArquivos(ie);
+                                conteudoXml = Xml.AssinarXML(conteudoXml, config.GetCertificado());
+                                //servico.ListarArquivos(conteudoXml);
+                                ListaArquivo listaArquivoContribuinte = ArquivoXML.GetListaArquivo(servico.ListarArquivos(conteudoXml));
+                                
+
+                                foreach (Arquivo arquivo in listaArquivoContribuinte.Arquivos)
+                                {
+
+
+                                    writer.WriteLine($"{listaArquivoContribuinte.Ie};{arquivo.TipoRecepcaoDescricao};{arquivo.Ecf};{arquivo.DataRefenrencia};{arquivo.DataHoraRecepcao};{arquivo.DataHoraProcessamento};{arquivo.TipoRecepcaoCodigo};{arquivo.SituacaoProcessamentoCodigo};{arquivo.SituacaoProcessamentoDescricao};{arquivo.Recibo}");
+
+
+                                }
+
+                            }
+
+                        }
+                        Console.WriteLine($"Arquivos_{data.ToString("ddMMyyyy_HHmmss")}.csv gerado na área!\n");
+                    }
+                }
+
+
+
+
             }
-
-
-
-            
-           
         }
     }
 }

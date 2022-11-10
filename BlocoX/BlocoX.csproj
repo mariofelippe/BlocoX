@@ -56,10 +56,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Models\Arquivo.cs" />
     <Compile Include="Models\Aviso.cs" />
     <Compile Include="Models\DadosReducao.cs" />
     <Compile Include="Models\Ecf.cs" />
     <Compile Include="Models\Estabelecimento.cs" />
+    <Compile Include="Models\ListaArquivo.cs" />
     <Compile Include="Models\PafEcf.cs" />
     <Compile Include="Models\Pendencia.cs" />
     <Compile Include="Models\PendenciaEcf.cs" />
